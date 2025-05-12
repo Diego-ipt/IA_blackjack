@@ -31,7 +31,7 @@ class Mano:
         self.bajada = False  # Indica si la mano ya termino
 
     def agregar_carta(self, carta):
-        """Agrega una carta a la mano y actualiza el total."""
+        """si se pasa, se marca la mano como bajada."""
         self.cartas.append(carta)
         if carta == 'A':
             self.ases += 1
@@ -42,6 +42,7 @@ class Mano:
                 self.ases -= 1
                 self.total -= 10
             else:
+                self.bajada=True
                 return False  # La mano ha perdido, no se puede seguir jugando.
         return True # La mano sigue vigente.
 
@@ -68,13 +69,12 @@ class Jugador:
 
     def pedir_carta(self, mano, carta):
         """Permite al jugador pedir una carta adicional."""
-        if mano in self.manos:
-            if mano.agregar_carta(carta) == False:
-                self.manos.remove(mano)  # Si la mano ha perdido, se elimina de la lista de manos.
-                return False  # La mano ha perdido, no se puede seguir jugando.
+        if mano in self.manos: 
+            return mano.agregar_carta(carta) # La mano ha perdido, no se puede seguir jugando.
+
             
     def terminar_mano(self, mano):
-        """Permite al jugador terminar su mano."""
+        """marca la mano como terminada."""
         if mano in self.manos:
             mano.bajada = True  # Marca la mano como terminada.
 
@@ -97,7 +97,7 @@ class Jugador:
 
 
     def surrender(self, mano):
-        """Permite al jugador rendirse y recuperar la mitad de su apuesta."""
+        """Permite al jugador rendirse y recuperar la mitad de su apuesta. elimina la mano."""
         if mano in self.manos:
             self.capital += mano.apuesta / 2
             self.manos.remove(mano)

@@ -28,6 +28,7 @@ class Mano:
             self.ases -= 1
             self.total -= 10
         self.apuesta = -1  # Inicializa la apuesta en -1 (no apostada)
+        self.bajada = False  # Indica si la mano ya termino
 
     def agregar_carta(self, carta):
         """Agrega una carta a la mano y actualiza el total."""
@@ -75,8 +76,7 @@ class Jugador:
     def terminar_mano(self, mano):
         """Permite al jugador terminar su mano."""
         if mano in self.manos:
-            self.manos.remove(mano)
-            return mano.valor_total() # Devuelve el valor total de la mano al terminarla.
+            mano.bajada = True  # Marca la mano como terminada.
 
     def split(self, mano):
         """Permite al jugador dividir su mano si tiene dos cartas del mismo valor."""

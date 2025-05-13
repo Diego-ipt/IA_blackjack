@@ -3,7 +3,7 @@ from player import Jugador
 from agentes_basicos import AgenteAleatorio
 
 def main():
-    capital_inicial = 1000000
+    capital_inicial = 10000000000
     # Crear jugadores
     jugador1 = Jugador("Jugador 1", capital=capital_inicial)
     jugador2 = Jugador("Jugador 2", capital=capital_inicial)
@@ -18,15 +18,16 @@ def main():
     casino = Casino(agentes=[agente1, agente2, agente3], dealer_nombre="Dealer", max_stands=3, min_apuesta=5000)
 
     # Jugar una ronda
-    print("Iniciando una ronda de Blackjack...")
-    for i in range(10):
+    print("Iniciando Blackjack...")
+    for i in range(50):
         casino.jugar_ronda()
-    print("Ronda finalizada.")
 
-    # Mostrar el capital final de los jugadores
+    # Mostrar el capital final de los jugadores y cuánto ganaron o perdieron
     print("\nResultados finales:")
     for agente in casino.agentes:
-        print(f"{agente.jugador.nombre}: Capital final = {agente.jugador.capital}")
+        capital_final = agente.jugador.capital
+        ganancia_perdida = capital_final - capital_inicial
+        print(f"{agente.jugador.nombre}: Capital final = {capital_final}, Ganancia/Pérdida = {ganancia_perdida}")
 
 if __name__ == "__main__":
     main()

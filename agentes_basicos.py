@@ -25,12 +25,13 @@ class AgenteAleatorio(Agente):
         Decide aleatoriamente qué hacer en el turno estándar.
         Opciones: 'terminar_mano', 'stand', 'pedir_carta', 'surrender'.
         """
-        
         opciones = ['terminar_mano', 'stand', 'pedir_carta', 'surrender']
+        jugadas = []
         for mano in self.jugador.manos:
             if not mano.bajada:  # Verifica si la mano no ha sido bajada
-                jugada = (random.choice(opciones), mano)  # Cambiar a tupla
+                jugada = (random.choice(opciones), mano)
                 print(f"{self.jugador.nombre} ha decidido: {jugada[0]} en la mano {jugada[1].cartas}")
-                return [jugada]  # Devuelve una lista de tuplas
-        self.termino = True
-        return []  # Si no hay manos disponibles, devuelve una lista vacía
+                jugadas.append(jugada)
+        if not jugadas:
+            self.termino = True
+        return jugadas

@@ -101,12 +101,12 @@ class Jugador:
 
 
     def surrender(self, mano):
-        """Permite al jugador rendirse y recuperar la mitad de su apuesta. elimina la mano."""
+        """Permite al jugador rendirse y recuperar la mitad de su apuesta."""
         if mano in self.manos:
-            self.capital += mano.apuesta / 2
+            self.capital += mano.apuesta // 2  # Asegura que sea un entero
             self.manos.remove(mano)
-        else:
-            return False  # La mano no existe, no se puede rendir.
+            return True
+        return False  # La mano no existe, no se puede rendir.
 
     def reset_manos(self):
         """Reinicia la mano del jugador para una nueva ronda."""

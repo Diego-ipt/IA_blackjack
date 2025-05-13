@@ -10,7 +10,6 @@ class Casino:
         # un jugador no puede plantarse mas de "max_stands" veces
         self.dealer = Jugador(dealer_nombre) # Dealer
         self.baraja = []  # Baraja de cartas
-        self.fin_ronda_per_mano = len(agentes)  # Indica el numero de manos que ya se bajaron
         self.min_apuesta = min_apuesta  # Apuesta mínima para cada jugador
 
     def reset_baraja(self):
@@ -55,11 +54,10 @@ class Casino:
                 agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
                 carta = self.baraja.pop()
                 agente.jugador.pedir_carta(agente.jugador.manos[1], carta)
-                self.fin_ronda_per_mano += 1 # Se suma una mano más a la ronda
         elif jugada == 'doblar':
             carta = self.baraja.pop()
             if agente.jugador.doblar(agente.jugador.manos[0], carta):
-                self.fin_ronda_per_mano -= 1 # ya bajo una mano, por que el doblado fue exitoso
+                agente.termino = True  # Marca al jugador que ya termino de jugar
             else:                
                 print(f"{agente.jugador.nombre} no puede doblar, no tiene capital suficiente.")
                 self.baraja.append(carta)  # Devuelve la carta a la baraja
@@ -75,37 +73,26 @@ class Casino:
         solo se permite: terminar_mano, stand, pedir_carta y surrender
         jugadas contiene [tipo_jugada, mano]
         """
-        if agente.termino:
-            return
-        if agente.veces_plantado >= self.max_stands:
-            print(f"{agente.jugador.nombre} ha alcanzado el máximo de plantadas.")
-            agente.termino = True
-            for mano in agente.jugador.manos:
-                if mano.bajada == False:
-                    agente.jugador.terminar_mano(mano)
-                    self.fin_ronda_per_mano -= 1
-            return
-        
-        jugadas=agente.decidir_accion()
+        jugadas = agente.decidir_accion()
         for jugada in jugadas:
             tipo_jugada, mano = jugada
             if tipo_jugada == 'terminar_mano':
                 agente.jugador.terminar_mano(mano)
-                self.fin_ronda_per_mano -= 1
             elif tipo_jugada == 'stand':
-                agente.veces_plantado += 1
+                if agente.veces_plantado >= self.max_stands:
+                    print(f"{agente.jugador.nombre} ha alcanzado el máximo de plantadas.")
+                    agente.jugador.terminar_mano(mano)
+                else:
+                    agente.veces_plantado += 1
             elif tipo_jugada == 'pedir_carta':
                 carta = self.baraja.pop()
-                if agente.jugador.pedir_carta(mano, carta) == False:
-                    agente.termino = True
-                    self.fin_ronda_per_mano -= 1
+                agente.jugador.pedir_carta(mano, carta)
             elif tipo_jugada == 'surrender':
                 agente.jugador.surrender(mano)
-                agente.termino = True
-                self.fin_ronda_per_mano -= 1
-            # Verifica si todas las manos del jugador están terminadas
 
-
+        # Check if all hands of the agent are finished
+        if not agente.jugador.manos or all(m.bajada for m in agente.jugador.manos):
+            agente.termino = True
 
     def turno_dealer(self):
         """Gestiona el turno del dealer."""
@@ -156,10 +143,13 @@ class Casino:
         for agente in self.agentes:
             self.first_turn(agente)
 
-        while self.fin_ronda_per_mano > 0:
+        while True:
             for agente in self.agentes:
                 if not agente.termino:
                     self.turno_jugador(agente)
+            # Ensure the loop exits if all agents are done
+            if all(agente.termino for agente in self.agentes):
+                break
 
         self.turno_dealer()
         self.determinar_ganadores()
@@ -170,6 +160,5 @@ class Casino:
             agente.termino = False
             agente.jugador.reset_manos()
         self.dealer.reset_manos()
-        self.fin_ronda_per_mano = len(self.agentes)  # Reinicia el contador de manos terminadas
 
         print("Ronda finalizada.")

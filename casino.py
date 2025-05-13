@@ -118,8 +118,11 @@ class Casino:
             for agente in self.agentes:
                 for mano in agente.jugador.manos:
                     if mano.valor_total() > self.dealer.manos[0].valor_total():
-                        print(f"{agente.jugador.nombre} ha ganado con la mano {mano.cartas}.")
-                        agente.jugador.capital += mano.apuesta * 2
+                        if mano.valor_total() <= 21:
+                            print(f"{agente.jugador.nombre} ha ganado con la mano {mano.cartas}.")
+                            agente.jugador.capital += mano.apuesta * 2
+                        else:
+                            print(f"{agente.jugador.nombre} ha perdido con la mano {mano.cartas}.")
                     elif mano.valor_total() == self.dealer.manos[0].valor_total():
                         print(f"{agente.jugador.nombre} ha empatado con la mano {mano.cartas}.")
                         agente.jugador.capital += mano.apuesta

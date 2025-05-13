@@ -10,7 +10,7 @@ class Casino:
         # un jugador no puede plantarse mas de "max_stands" veces
         self.dealer = Jugador(dealer_nombre) # Dealer
         self.baraja = []  # Baraja de cartas
-        self.fin_ronda = len(agentes)  # Indica el numero de manos que ya se bajaron
+        self.fin_ronda_per_mano = len(agentes)  # Indica el numero de manos que ya se bajaron
         self.min_apuesta = min_apuesta  # Apuesta mínima para cada jugador
 
     def reset_baraja(self):
@@ -29,15 +29,19 @@ class Casino:
         self.dealer.apostar(0, Mano([self.baraja.pop(), self.baraja.pop()]))
         # Reparte dos cartas a cada jugador
         for agente in self.agentes:
-            # Establece la apuesta inicial del jugador
-            apuesta = agente.apostar()
-            if apuesta > self.min_apuesta:
-                mano = [self.baraja.pop(), self.baraja.pop()]
-                agente.jugador.apostar(apuesta, Mano(mano))
+            if agente.banca_rota:
+                print(f"{agente.jugador.nombre} no puede jugar, la banca está rota.")
+                agente.termino = True
+                self.fin_ronda_per_mano -= 1
             else:
-                print(f"{agente.jugador.nombre} no tiene suficiente capital para apostar. Apuesta mínima: {self.min_apuesta}")
-                agente.termino = True  # Marca al jugador como que no puede jugar
-                self.fin_ronda -= 1
+                # Establece la apuesta inicial del jugador
+                apuesta = agente.apostar()
+                if apuesta > self.min_apuesta:
+                    agente.jugador.apostar(apuesta, Mano([self.baraja.pop(), self.baraja.pop()]))
+                else:
+                    print(f"{agente.jugador.nombre} no tiene suficiente capital para apostar. Apuesta mínima: {self.min_apuesta}")
+                    agente.termino = True  # Marca al jugador como que no puede jugar
+                    self.fin_ronda_per_mano -= 1
 
     def first_turn(self, agente):
         """
@@ -46,19 +50,19 @@ class Casino:
         """
         jugada=agente.decidir_accion_primer_turno()
         if jugada == 'split':
-            agente.jugador.split(agente.jugador.manos[0])
-            carta = self.baraja.pop()
-            agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
-            carta = self.baraja.pop()
-            agente.jugador.pedir_carta(agente.jugador.manos[1], carta)
-            self.fin_ronda += 1 # Se suma una mano más a la ronda
+            if agente.jugador.split(agente.jugador.manos[0]):
+                carta = self.baraja.pop()
+                agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
+                carta = self.baraja.pop()
+                agente.jugador.pedir_carta(agente.jugador.manos[1], carta)
+                self.fin_ronda_per_mano += 1 # Se suma una mano más a la ronda
         elif jugada == 'doblar':
             carta = self.baraja.pop()
-            if agente.jugador.doblar(agente.jugador.manos[0], carta)==False:
+            if agente.jugador.doblar(agente.jugador.manos[0], carta):
+                self.fin_ronda_per_mano -= 1 # ya bajo una mano, por que el doblado fue exitoso
+            else:                
                 print(f"{agente.jugador.nombre} no puede doblar, no tiene capital suficiente.")
                 self.baraja.append(carta)  # Devuelve la carta a la baraja
-            else:
-                self.fin_ronda -= 1 # ya bajo una mano, por que el doblado fue exitoso
         elif jugada == 'nada':
             pass
         else:
@@ -77,9 +81,9 @@ class Casino:
             print(f"{agente.jugador.nombre} ha alcanzado el máximo de plantadas.")
             agente.termino = True
             for mano in agente.jugador.manos:
-                if agente.jugador.manos.bajadas == False:
+                if mano.bajada == False:
                     agente.jugador.terminar_mano(mano)
-                    self.fin_ronda -= 1
+                    self.fin_ronda_per_mano -= 1
             return
         
         jugadas=agente.decidir_accion()
@@ -87,17 +91,20 @@ class Casino:
             tipo_jugada, mano = jugada
             if tipo_jugada == 'terminar_mano':
                 agente.jugador.terminar_mano(mano)
+                self.fin_ronda_per_mano -= 1
             elif tipo_jugada == 'stand':
                 agente.veces_plantado += 1
             elif tipo_jugada == 'pedir_carta':
                 carta = self.baraja.pop()
                 if agente.jugador.pedir_carta(mano, carta) == False:
                     agente.termino = True
-                    self.fin_ronda -= 1
+                    self.fin_ronda_per_mano -= 1
             elif tipo_jugada == 'surrender':
                 agente.jugador.surrender(mano)
                 agente.termino = True
-                self.fin_ronda -= 1
+                self.fin_ronda_per_mano -= 1
+            # Verifica si todas las manos del jugador están terminadas
+
 
 
     def turno_dealer(self):
@@ -143,18 +150,26 @@ class Casino:
 
     def jugar_ronda(self):
         """Juega una ronda completa de Blackjack."""
+        print("Iniciando una nueva ronda...")
         self.reset_baraja()
         self.repartir_cartas()
         for agente in self.agentes:
             self.first_turn(agente)
-        while self.fin_ronda > 0:
+
+        while self.fin_ronda_per_mano > 0:
             for agente in self.agentes:
-                self.turno_jugador(agente)
+                if not agente.termino:
+                    self.turno_jugador(agente)
+
         self.turno_dealer()
         self.determinar_ganadores()
 
-        # Reinicia las manos para la próxima ronda
+        # Reinicia las variables para la próxima ronda
         for agente in self.agentes:
+            agente.veces_plantado = 0
+            agente.termino = False
             agente.jugador.reset_manos()
         self.dealer.reset_manos()
-        self.fin_ronda = len(self.agentes)  # Reinicia el contador de manos terminadas
+        self.fin_ronda_per_mano = len(self.agentes)  # Reinicia el contador de manos terminadas
+
+        print("Ronda finalizada.")

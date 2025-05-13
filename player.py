@@ -27,7 +27,7 @@ class Mano:
         if self.total > 21 and 'A' in cartas:
             self.ases -= 1
             self.total -= 10
-        self.apuesta = -1  # Inicializa la apuesta en -1 (no apostada)
+        self.apuesta = 0  # Inicializa la apuesta en 0 (no apostada)
         self.bajada = False  # Indica si la mano ya termino
 
     def agregar_carta(self, carta):
@@ -80,20 +80,24 @@ class Jugador:
 
     def split(self, mano):
         """Permite al jugador dividir su mano si tiene dos cartas del mismo valor."""
-        if len(mano.cartas) == 2 and mano.cartas[0] == mano.cartas[1] and self.capital >= mano.apuesta:
-            nueva_mano = Mano([mano.cartas.pop()], mano.apuesta)
+        if len(mano.cartas) == 2 and valor_carta(mano.cartas[0]) == valor_carta(mano.cartas[1]) and self.capital >= mano.apuesta:
+            nueva_mano = Mano([mano.cartas.pop()])
             self.capital -= mano.apuesta
+            nueva_mano.apuesta = mano.apuesta
             self.manos.append(nueva_mano)
+            return True  # Se ha realizado el split.
+        return False  # No se puede realizar el split.
             
 
     def doblar(self, mano, carta):
         """Permite al jugador doblar su apuesta y recibir una carta adicional."""
-        if self.capital < mano.apuesta or mano.cartas != 2:
+        if self.capital < mano.apuesta or len(mano.cartas) != 2:
             return False  # No puede doblar si no tiene suficiente capital o si ya tiene más de 2 cartas.
+        self.capital -= mano.apuesta
         mano.apuesta *= 2
-        self.capital -= mano.apuesta / 2
         self.pedir_carta(mano, carta)  # Pide una carta adicional.
         self.terminar_mano(mano)  # Termina la mano después de doblar.
+        return True
 
 
     def surrender(self, mano):

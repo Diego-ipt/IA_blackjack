@@ -8,6 +8,7 @@ class Agente:
         self.jugador = Jugador
         self.veces_plantado = 0  # Contador de veces que el jugador se ha plantado en la ronda
         self.termino = False  # Indica si ya ha terminado todas las manos
+        self.banca_rota = False  # Indica si la banca está rota
 
     def apostar(self):
         """

@@ -1,7 +1,3 @@
-from random import shuffle
-from player import Jugador, Mano
-
-
 class Agente:
     def __init__(self, Jugador):
         """Inicializa el agente con un jugador."""

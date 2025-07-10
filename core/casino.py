@@ -1,6 +1,6 @@
 from random import shuffle
 from player import Jugador, Mano
-from agente_base import Agente
+
 
 class Casino:
     def __init__(self, agentes, dealer_nombre="Dealer", max_stands=3, min_apuesta=5000):

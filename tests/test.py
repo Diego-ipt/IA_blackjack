@@ -1,6 +1,6 @@
-from casino import Casino
-from player import Jugador
-from agentes_basicos import AgenteAleatorio
+from core.casino import Casino
+from core.player import Jugador
+from agents.agentes_basicos import AgenteAleatorio
 
 def main():
     capital_inicial = 10000000000

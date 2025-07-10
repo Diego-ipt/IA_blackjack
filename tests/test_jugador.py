@@ -2,6 +2,9 @@ import pytest
 from core.cartas import Carta, Rango, Palo
 from core.player import Mano, Jugador
 
+# Tests para la clase Mano y Jugador
+# Hechos por copilot (GPT-4.1)
+
 def test_mano_valor_total_sin_as():
     cartas = [Carta(Palo.PICAS, Rango.DIEZ), Carta(Palo.CORAZONES, Rango.CINCO)]
     mano = Mano(cartas)

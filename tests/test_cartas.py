@@ -1,6 +1,9 @@
 import pytest
 from core.cartas import Carta, Palo, Rango, Mazo
 
+# Tests para la clase Carta, Palo, Rango y Mazo
+# Hechos por copilot (GPT-4.1)
+
 def test_carta_str_repr():
     carta = Carta(Palo.PICAS, Rango.AS)
     assert str(carta) == "A de ♠"

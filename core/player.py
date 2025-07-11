@@ -120,7 +120,7 @@ class Jugador:
         :param mano: Mano a dividir
         :return: True si se ha realizado el split, False en caso contrario.
         """
-        if len(mano.cartas) != 2 and self.capital >= mano.apuesta:
+        if len(mano.cartas) != 2 or self.capital < mano.apuesta:
             return False
 
         if mano.cartas[0].rango.simbolo != mano.cartas[1].rango.simbolo:

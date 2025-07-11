@@ -194,7 +194,7 @@ class Casino:
         self.logger.info("Fase de pagos: Calculando resultados y pagos.")
         valor_final_dealer = self.dealer.manos[0].valor_total
         dealer_se_paso = valor_final_dealer > 21
-        dealer_tiene_bj = self.dealer.manos[0].es_blackjack
+        dealer_tiene_bj = self.dealer.manos[0].valor_total == 21
 
         for agente in agentes_activos:
             for mano in agente.jugador.manos:

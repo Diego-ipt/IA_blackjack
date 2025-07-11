@@ -38,6 +38,13 @@ class Mano:
 
         return total_con_as <= 21 and hay_ases
 
+    @property
+    def es_blackjack(self):
+        """
+        Indica si la mano es un Blackjack (21 con 2 cartas: As + 10, J, Q o K).
+        """
+        return len(self.cartas) == 2 and self.valor_total == 21
+
     def agregar_carta(self, carta: Carta):
         """
         Agrega una carta a la mano
@@ -92,7 +99,7 @@ class Jugador:
         Agrega una carta a la mano del jugador.
         """
         if mano in self.manos:
-            return mano.agregar_carta(carta) # La mano ha perdido, no se puede seguir jugando.
+            return mano.agregar_carta(carta)
         return None
 
 
@@ -117,13 +124,14 @@ class Jugador:
         return True  # Se ha realizado el split.
 
 
-    def doblar_apuesta(self, mano: Mano, carta: Carta):
+    def doblar_apuesta(self, mano: Mano):
         """
         Permite al jugador doblar su apuesta.
         El casino se encarga de repartir una carta adicional.
         """
         if self.capital < mano.apuesta:
             # No puede doblar si no tiene suficiente capital o si ya tiene más de 2 cartas.
+            print("No alcanza capital")
             return False
 
         self.capital -= mano.apuesta

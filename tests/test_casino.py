@@ -1,7 +1,9 @@
 import pytest
+import logging
 from core.casino import Casino
 from core.player import Jugador
 from agents.agente_aleatorio import AgenteAleatorio
+
 
 def test_simulacion_blackjack_varios_jugadores():
     # Crear varios jugadores con capital inicial
@@ -29,3 +31,5 @@ def test_simulacion_blackjack_un_jugador():
     casino.jugar_partida(num_rondas=3)
     # El capital puede variar
     assert jugador.capital >= 0
+
+

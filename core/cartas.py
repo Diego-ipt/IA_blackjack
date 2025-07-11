@@ -54,7 +54,7 @@ class Carta:
         self.rango = rango
 
     def __str__(self):
-        return f"{self.rango.simbolo} de {self.palo.value}"
+        return f"{self.rango.simbolo}{self.palo.value}"
 
     def __repr__(self):
         return f"Carta({self.palo}, {self.rango})"
@@ -65,6 +65,8 @@ class Carta:
         Devuelve el valor de la carta. Abstrae el uso de Enums
         """
         return self.rango.valor
+
+
 
 
 class Mazo:

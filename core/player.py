@@ -54,9 +54,15 @@ class Mano:
         if self.valor_total > 21:
             self.turno_terminado = True
 
+    def __str__(self):
+        cartas_str = ", ".join(str(c) for c in self.cartas)
+        if self.es_blanda:
+            return f"[{cartas_str}] (Valor = {self.valor_total}, Blanda)"
+        return f"[{cartas_str}] (Valor = {self.valor_total})"
+
     def __repr__(self) -> str:
         cartas_str = ", ".join(str(c) for c in self.cartas)
-        return f"Mano(cartas=[{cartas_str}], valor = {self.valor_total}"
+        return f"Mano(cartas=[{cartas_str}], valor = {self.valor_total})"
 
 
 class Jugador:
@@ -68,7 +74,11 @@ class Jugador:
         """
         self.nombre = nombre
         self.capital = capital
+        self.capital_pre_turno = 0
         self.manos = []
+
+    def __str__(self):
+        return f"{self.nombre} (Capital: {self.capital})"
 
     def reset_manos(self):
         """
@@ -87,6 +97,7 @@ class Jugador:
         if cantidad <= 0 or cantidad > self.capital:
             return False
 
+        self.capital_pre_turno = self.capital
         self.capital -= cantidad
         mano = Mano([])
         mano.apuesta = cantidad
@@ -112,8 +123,8 @@ class Jugador:
         if len(mano.cartas) != 2 and self.capital >= mano.apuesta:
             return False
 
-        if mano.cartas[0].valor != mano.cartas[1].valor:
-            # No se puede dividir si las cartas no son del mismo valor.
+        if mano.cartas[0].rango.simbolo != mano.cartas[1].rango.simbolo:
+            # No se puede dividir si las cartas no son del mismo simbolo (Ojo: simbolo se refiere a letra, no palo).
             return False
 
         self.capital -= mano.apuesta

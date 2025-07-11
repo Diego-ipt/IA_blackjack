@@ -6,7 +6,7 @@ from core.cartas import Carta, Palo, Rango, Mazo
 
 def test_carta_str_repr():
     carta = Carta(Palo.PICAS, Rango.AS)
-    assert str(carta) == "A de ♠"
+    assert str(carta) == "A♠"
     assert repr(carta) == f"Carta({Palo.PICAS}, {Rango.AS})"
 
 def test_carta_valor():

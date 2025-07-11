@@ -1,8 +1,8 @@
 import random
-from agente_base import Agente
-from ..core.acciones import Accion
-from ..core.player import Jugador, Mano
-from ..core.cartas import Carta
+from .agente_base import Agente
+from core.acciones import Accion
+from core.player import Jugador, Mano
+from core.cartas import Carta
 
 class AgenteAleatorio(Agente):
     def __init__(self, jugador):

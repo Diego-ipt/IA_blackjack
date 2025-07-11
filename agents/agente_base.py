@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from ..core.player import Jugador, Mano
-from ..core.cartas import Carta
-from ..core.acciones import Accion
+from core.player import Jugador, Mano
+from core.cartas import Carta
+from core.acciones import Accion
 
 class Agente(ABC):
     def __init__(self, jugador: Jugador):

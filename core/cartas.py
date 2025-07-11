@@ -148,5 +148,5 @@ class MazoDeterminista(Mazo):
     def __init__(self, cartas: list[Carta]):
         super().__init__(num_mazos=1)
         self.cartas = cartas
-        self.limite_barajado = len(cartas)  # No se baraja, se reparte en orden
+        self.limite_barajado = 0  # No se baraja, se reparte en orden
 

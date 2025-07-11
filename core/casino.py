@@ -6,12 +6,16 @@ from agents.agente_base import Agente
 
 
 class Casino:
-    def __init__(self, agentes: list[Agente], num_mazos: int = 4, zapato: float = 0.75):
+    def __init__(self, agentes: list[Agente], num_mazos: int = 4, zapato: float = 0.75, mazo: Mazo = None):
         self.agentes = agentes
         self.num_mazos = num_mazos
         self.zapato = zapato
         self.dealer = Jugador(nombre="Dealer", capital=10000)
-        self.mazo = Mazo(num_mazos=num_mazos, zapato=zapato)
+
+        if mazo is not None:
+            self.mazo = mazo
+        else:
+            self.mazo = Mazo(num_mazos=num_mazos, zapato=zapato)
         self.logger = logging.getLogger(self.__class__.__name__)
 
     def _notificar_observadores(self, carta: Carta):

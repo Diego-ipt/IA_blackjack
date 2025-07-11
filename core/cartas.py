@@ -139,4 +139,14 @@ class Mazo:
         """
         return len(self.cartas) <= self.limite_barajado
 
+class MazoDeterminista(Mazo):
+    """
+    Mazo determinista que reparte cartas de forma predecible.
+    Utilizado para pruebas y simulaciones.
+    """
+
+    def __init__(self, cartas: list[Carta]):
+        super().__init__(num_mazos=1)
+        self.cartas = cartas
+        self.limite_barajado = len(cartas)  # No se baraja, se reparte en orden
 

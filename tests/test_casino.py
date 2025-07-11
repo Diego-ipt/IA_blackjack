@@ -4,6 +4,8 @@ from core.casino import Casino
 from core.player import Jugador
 from agents.agente_aleatorio import AgenteAleatorio
 
+# Tests para la clase Casino
+# Hechos por copilot (GPT-4.1)
 
 def test_simulacion_blackjack_varios_jugadores():
     # Crear varios jugadores con capital inicial

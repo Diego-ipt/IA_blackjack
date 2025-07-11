@@ -6,7 +6,9 @@ from core.cartas import Carta, Palo, Rango, MazoDeterminista
 from core.acciones import Accion
 from agents.agente_determinista import AgenteDeterminista
 
-# Disable logging for cleaner test output
+# Tests para la clase Casino
+# Hechos por copilot (Claude Sonnet 4)
+
 logging.disable(logging.CRITICAL)
 
 class TestCasinoDeterminista:

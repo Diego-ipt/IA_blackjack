@@ -77,7 +77,7 @@ def test_jugador_doblar_apuesta():
     jugador = Jugador("Frank", 100)
     jugador.apostar(20)
     mano = jugador.manos[0]
-    assert jugador.doblar_apuesta(mano, Carta(Palo.PICAS, Rango.CINCO))
+    assert jugador.doblar_apuesta(mano)
     assert jugador.capital == 60
     assert mano.apuesta == 40
 
@@ -85,7 +85,7 @@ def test_jugador_doblar_apuesta_invalido():
     jugador = Jugador("Grace", 10)
     jugador.apostar(10)
     mano = jugador.manos[0]
-    assert not jugador.doblar_apuesta(mano, Carta(Palo.PICAS, Rango.CINCO))
+    assert not jugador.doblar_apuesta(mano)
     assert jugador.capital == 0
     assert mano.apuesta == 10
 

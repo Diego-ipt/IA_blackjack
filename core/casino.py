@@ -22,6 +22,14 @@ class Casino:
         for agente in self.agentes:
                 # Solo los que tienen implementado observar haran algo
                 agente.observar_carta(carta)
+    
+    def _resetear_conteo_agentes(self):
+        """
+        Notifica a los agentes que se ha barajado el mazo
+        """
+        for agente in self.agentes:
+            if hasattr(agente, 'resetear_conteo'):
+                agente.resetear_conteo()
 
     def _jugar_ronda(self):
         self.logger.info("--- INICIO DE RONDA ---")
@@ -31,6 +39,9 @@ class Casino:
         # Barajar el mazo si es necesario (Crearlo de nuevo)
         if self.mazo.necesita_barajar():
             self.mazo = Mazo(num_mazos=self.num_mazos, zapato=self.zapato)
+            # Notificar a los agentes que se ha barajado
+            self._resetear_conteo_agentes()
+            self.logger.info("Mazo barajado - Conteos reseteados")
 
         for agente in self.agentes:
             agente.jugador.reset_manos()

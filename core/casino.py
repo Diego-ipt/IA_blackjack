@@ -2,11 +2,19 @@ import logging
 from .acciones import Accion
 from .player import Jugador, Mano
 from .cartas import Mazo, Carta
+from .data_collector import DataCollector
 from agents.agente_base import Agente
 
 
 class Casino:
-    def __init__(self, agentes: list[Agente], num_mazos: int = 4, zapato: float = 0.75, mazo: Mazo = None):
+    def __init__(self, agentes: list[Agente], num_mazos: int = 4, zapato: float = 0.75, mazo: Mazo = None, data_collector: DataCollector = None):
+
+        self.logger = logging.getLogger(self.__class__.__name__)
+        self.data_collector = None
+        if data_collector is None:
+            self.logger.debug("data_collector no inicializado, no se registraran resultados")
+        else:
+            self.data_collector = data_collector
         self.agentes = agentes
         self.num_mazos = num_mazos
         self.zapato = zapato
@@ -16,7 +24,6 @@ class Casino:
             self.mazo = mazo
         else:
             self.mazo = Mazo(num_mazos=num_mazos, zapato=zapato)
-        self.logger = logging.getLogger(self.__class__.__name__)
 
     def _notificar_observadores(self, carta: Carta):
         for agente in self.agentes:
@@ -59,6 +66,7 @@ class Casino:
                 agentes_activos.append(agente)
                 self.logger.info(f"Jugador '{agente.jugador.nombre}' apuesta ${apuesta}. Capital restante: ${agente.jugador.capital}")
             else:
+                print(f"Jugador '{agente.jugador.nombre}' no puede apostar ${apuesta}. Capital: ${agente.jugador.capital}")
                 self.logger.info(f"Jugador '{agente.jugador.nombre}' no puede apostar ${apuesta}. Capital: ${agente.jugador.capital}")
         self.logger.info("*** Fin de Fase de Apuestas. ***\n")
 
@@ -108,6 +116,11 @@ class Casino:
 
                     # Pedir decision al agente
                     accion = agente.decidir_accion(mano_actual, carta_visible_dealer)
+
+                    # Registramos la accion
+                    if self.data_collector is not None:
+                        self.data_collector.registrar_decision(agente=agente, mano=mano_actual, carta_dealer=carta_visible_dealer, accion=accion)
+                    self.logger.debug("data_collector ha registrado la decision")
                     self.logger.info(f"   '{agente.jugador.nombre}' decide: {accion.name}.")
                     # El casino valida el movimiento
 
@@ -178,8 +191,12 @@ class Casino:
                             self.logger.info(f"   Acción ilegal: {accion.name}. Tratado como PLANTARSE.")
                             mano_actual.turno_terminado = True
                         else:
+                            recupera = int(mano_actual.apuesta / 2)
+                            ganancia= -recupera
+                            if self.data_collector is not None:
+                                self.data_collector.registrar_resultado(mano=mano_actual, ganancia=ganancia)
                             agente.jugador.rendirse(mano_actual)
-                            self.logger.info(f"   '{agente.jugador.nombre}' se rinde con {mano_actual}. Recupera ${int(mano_actual.apuesta / 2)}. Mano terminada.")
+                            self.logger.info(f"   '{agente.jugador.nombre}' se rinde con {mano_actual}. Recupera ${recupera}. Mano terminada.")
                             mano_actual.turno_terminado = True
 
                 self.logger.info(f"   Fin de mano {indice_mano_actual+1}: {mano_actual}.\n")
@@ -216,6 +233,7 @@ class Casino:
         for agente in agentes_activos:
             for mano in agente.jugador.manos:
                 self.logger.info(f"Revisando mano de '{agente.jugador.nombre}': {mano}. Capital antes: ${agente.jugador.capital + mano.apuesta}")
+                ganancia = 0
 
                 if mano.es_blackjack:
                     if not dealer_tiene_bj:
@@ -225,6 +243,7 @@ class Casino:
                         self.logger.info(f"'{agente.jugador.nombre}' gana ${ganancia} con {mano} (Blackjack paga 3:2). Capital despues: ${agente.jugador.capital}")
                     else:
                         # Empate, ambos tienen bj
+                        ganancia = 0
                         agente.jugador.capital += mano.apuesta
                         self.logger.info(f"'{agente.jugador.nombre}' empata con {mano}. Capital despues: ${agente.jugador.capital}")
                     continue
@@ -234,26 +253,36 @@ class Casino:
 
                 if jugador_se_paso:
                     # Si se paso de 21
+                    ganancia = -mano.apuesta
                     self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
                 elif dealer_se_paso:
                     # Jugador gana, dealer se paso
                     # Pago es 1:1, (si jugador pago 10, recupera apuesta y gana (recibe 20))
+                    ganancia = mano.apuesta
                     agente.jugador.capital += mano.apuesta * 2
                     self.logger.info(f"'{agente.jugador.nombre}' gana ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
                 elif valor_mano_jugador > valor_final_dealer:
                     # Si no se paso de 21, y tiene mayor valor que el dealer
-                    agente.jugador.capital += mano.apuesta * 2
+                    ganancia = mano.apuesta
+                    agente.jugador.capital += mano.apuesta
                     self.logger.info(f"'{agente.jugador.nombre}' gana ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
                 elif valor_mano_jugador == valor_final_dealer:
                     # Empate, el jugador recupera apuesta
+                    ganancia = 0
                     agente.jugador.capital += mano.apuesta
                     self.logger.info(f"'{agente.jugador.nombre}' empata con {mano}. Capital despues: ${agente.jugador.capital}")
                 else:
                     # valor mano jugador < valor mano dealer
+                    ganancia = -mano.apuesta
                     self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
+
+                if self.data_collector is not None:
+                    self.data_collector.registrar_resultado(mano=mano, ganancia=ganancia)
         self.logger.info("*** Fin de Fase de Pagos. ***\n")
 
         self.logger.info("------ FIN DE RONDA ------\n")
+        if self.data_collector is not None:
+            self.data_collector.check_and_flush()
 
 
     def jugar_partida(self, num_rondas:int):

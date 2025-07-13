@@ -14,7 +14,7 @@ def test_simulacion_blackjack_varios_jugadores():
     casino = Casino(agentes, num_mazos=2, zapato=0.7)
     # Simular 5 rondas
     casino.jugar_partida(num_rondas=5)
-    # Verificar que el capital de los jugadores cambió
+    # Verificar que el capital de los jugadores cambió (Es al azar, puede fallar XD)
     for jugador in jugadores:
         assert jugador.capital != 100
 

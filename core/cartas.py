@@ -66,6 +66,11 @@ class Carta:
         """
         return self.rango.valor
 
+    @property
+    def simbolo(self):
+
+        return self.rango.simbolo
+
 
 
 

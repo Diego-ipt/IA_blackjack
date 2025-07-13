@@ -15,17 +15,17 @@ class AgenteAleatorio(Agente):
         """
 
         # Dolares, para no tener tantos ceros en el numero
-        apuesta_min = 5
+        apuesta_min = 1
         if self.jugador.capital < apuesta_min:
             return 0
 
         # Limite de apuesta es el 10% del capital del jugador
-        apuesta_max = int(self.jugador.capital * 0.1)
+        apuesta_max = int(self.jugador.capital * 0.01)
 
         if apuesta_max < apuesta_min:
             return apuesta_min
 
-        apuesta = random.randint(apuesta_min, apuesta_max)  # Apuesta entre 5000 y el 10% del capital
+        apuesta = random.randint(apuesta_min, apuesta_max)  # Apuesta entre 5 y el 10% del capital
         return apuesta
 
     def decidir_accion(self, mano: Mano, carta_dealer: Carta):

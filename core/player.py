@@ -74,7 +74,6 @@ class Jugador:
         """
         self.nombre = nombre
         self.capital = capital
-        self.capital_pre_turno = 0
         self.manos = []
 
     def __str__(self):
@@ -97,7 +96,6 @@ class Jugador:
         if cantidad <= 0 or cantidad > self.capital:
             return False
 
-        self.capital_pre_turno = self.capital
         self.capital -= cantidad
         mano = Mano([])
         mano.apuesta = cantidad

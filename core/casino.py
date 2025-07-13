@@ -32,9 +32,9 @@ class Casino:
                 agente.resetear_conteo()
 
     def _jugar_ronda(self):
-        self.logger.info("--- INICIO DE RONDA ---")
+        self.logger.info("------ INICIO DE RONDA ------")
         #1. Fase de Preparacion
-        self.logger.info("Fase de preparación: Barajando y reseteando manos.")
+        self.logger.info("*** Fase de preparación: Barajando y reseteando manos. ***")
 
         # Barajar el mazo si es necesario (Crearlo de nuevo)
         if self.mazo.necesita_barajar():
@@ -42,13 +42,15 @@ class Casino:
             # Notificar a los agentes que se ha barajado
             self._resetear_conteo_agentes()
             self.logger.info("Mazo barajado - Conteos reseteados")
+        self.logger.info("No fue necesario barajar el mazo.")
+        self.logger.info("*** Fin de Fase de Preparacion. ***\n")
 
         for agente in self.agentes:
             agente.jugador.reset_manos()
         self.dealer.reset_manos()
 
         #2. Fase de Apuestas
-        self.logger.info("Fase de apuestas: Jugadores deciden sus apuestas.")
+        self.logger.info("*** Fase de apuestas: Jugadores deciden sus apuestas. ***")
         # Los agentes que si tienen para apostar se agregan a la lista
         agentes_activos = []
         for agente in self.agentes:
@@ -58,9 +60,10 @@ class Casino:
                 self.logger.info(f"Jugador '{agente.jugador.nombre}' apuesta ${apuesta}. Capital restante: ${agente.jugador.capital}")
             else:
                 self.logger.info(f"Jugador '{agente.jugador.nombre}' no puede apostar ${apuesta}. Capital: ${agente.jugador.capital}")
+        self.logger.info("*** Fin de Fase de Apuestas. ***\n")
 
         #3. Fase de Reparto
-        self.logger.info("Fase de reparto: Repartiendo cartas iniciales.")
+        self.logger.info("*** Fase de reparto: Repartiendo cartas iniciales. ***")
 
         # Crear mano del dealer
         self.dealer.manos.append(Mano([]))
@@ -70,7 +73,7 @@ class Casino:
         for agente in agentes_activos:
             carta = self.mazo.repartir()
             agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
-            self.logger.info(f"Manos repartidas: '{agente.jugador.nombre}' tiene {agente.jugador.manos[0]}. Capital: ${agente.jugador.capital}")
+            self.logger.info(f"Manos repartidas: '{agente.jugador.nombre}' tiene {agente.jugador.manos[0]}.")
             self._notificar_observadores(carta)
 
         carta_visible_dealer = self.mazo.repartir()
@@ -82,21 +85,22 @@ class Casino:
         for agente in agentes_activos:
             carta = self.mazo.repartir()
             agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
-            self.logger.info(f"Manos repartidas: '{agente.jugador.nombre}' tiene {agente.jugador.manos[0]}. Capital: ${agente.jugador.capital}")
+            self.logger.info(f"Manos repartidas: '{agente.jugador.nombre}' tiene {agente.jugador.manos[0]}.")
             self._notificar_observadores(carta)
 
         # Repartimos la carta al dealer que no se muestra
         self.carta_oculta_dealer = self.mazo.repartir()
         self.logger.info(f"Dealer recibe carta oculta.")
+        self.logger.info("*** Fin de Fase de Reparto. ***\n")
 
         # 4. Fase de Jugadores
-        self.logger.info("Fase de jugadores: Cada jugador toma decisiones.")
+        self.logger.info("*** Fase de jugadores: Cada jugador toma decisiones. ***")
         for agente in agentes_activos:
-            self.logger.info(f"Turno de '{agente.jugador.nombre}'. Capital: ${agente.jugador.capital}. Manos: {agente.jugador.manos}")
+            self.logger.info(f"Turno de '{agente.jugador.nombre}'. Manos: {agente.jugador.manos}")
             indice_mano_actual = 0
             while indice_mano_actual < len(agente.jugador.manos):
                 mano_actual = agente.jugador.manos[indice_mano_actual]
-                self.logger.info(f"-> Jugando mano {indice_mano_actual+1}/{len(agente.jugador.manos)}: {mano_actual}")
+                self.logger.info(f"-> Jugando mano {indice_mano_actual+1}/{len(agente.jugador.manos)}: {mano_actual}. Apuesta: ${mano_actual.apuesta}")
                 # Ciclo de juego para mano actual
                 while not mano_actual.turno_terminado:
                     # Revisar carta del dealer
@@ -178,11 +182,12 @@ class Casino:
                             self.logger.info(f"   '{agente.jugador.nombre}' se rinde con {mano_actual}. Recupera ${int(mano_actual.apuesta / 2)}. Mano terminada.")
                             mano_actual.turno_terminado = True
 
-                self.logger.info(f"   Fin de mano {indice_mano_actual+1}: {mano_actual}. Capital: ${agente.jugador.capital}")
+                self.logger.info(f"   Fin de mano {indice_mano_actual+1}: {mano_actual}.\n")
                 indice_mano_actual += 1
+        self.logger.info("*** Fin de Fase de Jugadores. ***\n")
 
         # 5. Fase de Dealer
-        self.logger.info("Fase del dealer: Revelando carta oculta y jugando turno.")
+        self.logger.info("*** Fase del dealer: Revelando carta oculta y jugando turno. ***")
         # Agregamos la carta oculta a la mano del dealer
         self.dealer.pedir_carta(self.dealer.manos[0], self.carta_oculta_dealer)
         self.logger.info(f"Turno del Dealer. Revela: {self.carta_oculta_dealer}. Mano completa: {self.dealer.manos[0]}")
@@ -200,27 +205,28 @@ class Casino:
             self.logger.info(f"Dealer se pasa con {self.dealer.manos[0]}.")
         else:
             self.logger.info(f"Dealer se planta con {self.dealer.manos[0]}.")
+        self.logger.info("*** Fin de Fase de Dealer. ***\n")
 
         # 6. Fase de pagos
-        self.logger.info("Fase de pagos: Calculando resultados y pagos.")
+        self.logger.info("*** Fase de pagos: Calculando resultados y pagos. ***")
         valor_final_dealer = self.dealer.manos[0].valor_total
         dealer_se_paso = valor_final_dealer > 21
         dealer_tiene_bj = self.dealer.manos[0].valor_total == 21
 
         for agente in agentes_activos:
             for mano in agente.jugador.manos:
-                self.logger.info(f"Revisando mano de '{agente.jugador.nombre}': {mano}. Capital antes: ${agente.jugador.capital_pre_turno}")
+                self.logger.info(f"Revisando mano de '{agente.jugador.nombre}': {mano}. Capital antes: ${agente.jugador.capital + mano.apuesta}")
 
                 if mano.es_blackjack:
                     if not dealer_tiene_bj:
                         # Jugador gana 3:2
                         ganancia = int(mano.apuesta * 1.5)
                         agente.jugador.capital += mano.apuesta + ganancia
-                        self.logger.info(f"'{agente.jugador.nombre}' gana ${ganancia} con {mano} (Blackjack paga 3:2). Capital actual: ${agente.jugador.capital}")
+                        self.logger.info(f"'{agente.jugador.nombre}' gana ${ganancia} con {mano} (Blackjack paga 3:2). Capital despues: ${agente.jugador.capital}")
                     else:
                         # Empate, ambos tienen bj
                         agente.jugador.capital += mano.apuesta
-                        self.logger.info(f"'{agente.jugador.nombre}' empata con {mano}. Capital actual: ${agente.jugador.capital}")
+                        self.logger.info(f"'{agente.jugador.nombre}' empata con {mano}. Capital despues: ${agente.jugador.capital}")
                     continue
 
                 valor_mano_jugador = mano.valor_total
@@ -228,25 +234,26 @@ class Casino:
 
                 if jugador_se_paso:
                     # Si se paso de 21
-                    self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital actual: ${agente.jugador.capital}")
+                    self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
                 elif dealer_se_paso:
                     # Jugador gana, dealer se paso
                     # Pago es 1:1, (si jugador pago 10, recupera apuesta y gana (recibe 20))
                     agente.jugador.capital += mano.apuesta * 2
-                    self.logger.info(f"'{agente.jugador.nombre}' gana ${mano.apuesta} con {mano}. Capital actual: ${agente.jugador.capital}")
+                    self.logger.info(f"'{agente.jugador.nombre}' gana ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
                 elif valor_mano_jugador > valor_final_dealer:
                     # Si no se paso de 21, y tiene mayor valor que el dealer
                     agente.jugador.capital += mano.apuesta * 2
-                    self.logger.info(f"'{agente.jugador.nombre}' gana ${mano.apuesta} con {mano}. Capital actual: ${agente.jugador.capital}")
+                    self.logger.info(f"'{agente.jugador.nombre}' gana ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
                 elif valor_mano_jugador == valor_final_dealer:
                     # Empate, el jugador recupera apuesta
                     agente.jugador.capital += mano.apuesta
-                    self.logger.info(f"'{agente.jugador.nombre}' empata con {mano}. Capital actual: ${agente.jugador.capital}")
+                    self.logger.info(f"'{agente.jugador.nombre}' empata con {mano}. Capital despues: ${agente.jugador.capital}")
                 else:
                     # valor mano jugador < valor mano dealer
-                    self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital actual: ${agente.jugador.capital}")
+                    self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
+        self.logger.info("*** Fin de Fase de Pagos. ***\n")
 
-        self.logger.info("--- FIN DE RONDA ---\n")
+        self.logger.info("------ FIN DE RONDA ------\n")
 
 
     def jugar_partida(self, num_rondas:int):

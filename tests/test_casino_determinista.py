@@ -9,7 +9,7 @@ from agents.agente_determinista import AgenteDeterminista
 # Tests para la clase Casino
 # Hechos por copilot (Claude Sonnet 4)
 
-logging.disable(logging.CRITICAL)
+#logging.disable(logging.CRITICAL)
 
 class TestCasinoDeterminista:
     """

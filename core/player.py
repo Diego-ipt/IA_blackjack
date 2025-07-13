@@ -121,8 +121,7 @@ class Jugador:
         if len(mano.cartas) != 2 or self.capital < mano.apuesta:
             return False
 
-        if mano.cartas[0].rango.simbolo != mano.cartas[1].rango.simbolo:
-            # No se puede dividir si las cartas no son del mismo simbolo (Ojo: simbolo se refiere a letra, no palo).
+        if mano.cartas[0].valor != mano.cartas[1].valor:
             return False
 
         self.capital -= mano.apuesta

@@ -41,6 +41,34 @@ class Rango(Enum):
         Devuelve el valor de la carta.
         """
         return self.value[1]
+    
+    @classmethod
+    def from_valor(cls, valor: int):
+        """
+        Devuelve el Rango correspondiente a un valor dado.
+        """
+        if valor == 1 or valor == 11:
+            return cls.AS
+        elif valor == 2:
+            return cls.DOS
+        elif valor == 3:
+            return cls.TRES
+        elif valor == 4:
+            return cls.CUATRO
+        elif valor == 5:
+            return cls.CINCO
+        elif valor == 6:
+            return cls.SEIS
+        elif valor == 7:
+            return cls.SIETE
+        elif valor == 8:
+            return cls.OCHO
+        elif valor == 9:
+            return cls.NUEVE
+        elif valor == 10:
+            return cls.DIEZ
+        else:
+            raise ValueError(f"Valor inválido: {valor}")
 
 class Carta:
 

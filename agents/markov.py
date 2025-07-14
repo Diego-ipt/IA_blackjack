@@ -1,7 +1,7 @@
 from .agente_base import Agente
 from core.acciones import Accion
 from core.player import Jugador, Mano
-from core.cartas import Carta, Rango
+from core.cartas import Carta, Rango, Palo
 import numpy as np
 
 """
@@ -125,13 +125,14 @@ class AgenteMarkov(Agente):
         """
         self.cartas_restantes = np.array([4 * self.num_mazos] * 9 + [16 * self.num_mazos])
         self.memo = {}
-            
-    def decidir_apuesta(self, capital_actual: int) -> int:
+
+    def decidir_apuesta(self, capital_actual: int = None) -> int:
         """
         Decide la apuesta.
         Se usara una apuesta fija del 5% del capital por ahora.
         """
-        apuesta_base = int(capital_actual * 0.05)
+        capital = capital_actual if capital_actual is not None else self.jugador.capital
+        apuesta_base = int(capital * 0.05)
         return max(10, apuesta_base)
     
     def _calcular_ev_plantarse(self, valor_jugador: int, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
@@ -182,7 +183,7 @@ class AgenteMarkov(Agente):
                 nuevas_cartas_restantes[i] -= 1
                 
                 # Crea la nueva carta (el palo no importa para el valor)
-                nueva_carta = Carta(Rango.from_valor(valor_carta), "Picas")
+                nueva_carta = Carta(Palo.PICAS, Rango.from_valor(valor_carta))
                 
                 # Simula recursivamente
                 dist_sub_problema = self._simular_dealer(Mano(mano_dealer.cartas + [nueva_carta]), nuevas_cartas_restantes)
@@ -205,7 +206,7 @@ class AgenteMarkov(Agente):
                 nuevas_cartas_restantes = cartas_restantes.copy()
                 nuevas_cartas_restantes[i] -= 1
                 
-                nueva_carta = Carta(Rango.from_valor(valor_carta), "Picas")
+                nueva_carta = Carta(Palo.PICAS, Rango.from_valor(valor_carta))
                 nueva_mano = Mano(mano_jugador.cartas + [nueva_carta])
 
                 # El valor de pedir es el promedio ponderado del valor del siguiente estado
@@ -227,7 +228,7 @@ class AgenteMarkov(Agente):
                 nuevas_cartas_restantes = cartas_restantes.copy()
                 nuevas_cartas_restantes[i] -= 1
 
-                nueva_carta = Carta(Rango.from_valor(valor_carta), "Picas")
+                nueva_carta = Carta(Palo.PICAS, Rango.from_valor(valor_carta))
                 nueva_mano = Mano(mano_jugador.cartas + [nueva_carta])
                 
                 if nueva_mano.valor_total > 21:
@@ -248,7 +249,7 @@ class AgenteMarkov(Agente):
         carta_dividida_valor = mano_jugador.cartas[0].valor
         
         # Valor de la primera mano
-        mano1 = Mano([Carta(Rango.from_valor(carta_dividida_valor), "Picas")])
+        mano1 = Mano([Carta(Palo.PICAS, Rango.from_valor(carta_dividida_valor))])
         # Nota: Un cálculo más preciso actualizaría las cartas restantes entre las dos manos.
         # Por simplicidad y rendimiento, aquí usamos el mismo mazo para ambas.
         ev_mano1 = self._get_valor_estado(mano1, carta_dealer, cartas_restantes.copy())

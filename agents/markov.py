@@ -86,19 +86,232 @@ Cálculo de Probabilidades:
 Las probabilidades se calculan usando las cartas restantes en el mazo y simulando
 el comportamiento determinista del dealer (pedir hasta 17+).
 """
-
-class AgenteMarkov(Agente):
+class AgenteMarkov_arriesgado(Agente):
     """
-    Agente MDP con una arquitectura de caché de 3 niveles para máxima eficiencia.
-    1. memo_dealer_dist: Almacena la distribución de la mano final del dealer.
-    2. memo_outcome_prob: Almacena las probabilidades de resultado (win/loss/tie).
-    3. memo_valor_estado: Almacena el valor de los estados de decisión para la recursión de DP.
-    Los cachés persisten entre decisiones y solo se resetean al barajar el mazo.
+    Agente MDP con una arquitectura de caché y AGRUPACIÓN DE ESTADOS.
+    *** VERSIÓN EXPERIMENTAL CON RECOMPENSAS MODIFICADAS ***
+    - Victoria: +2
+    - Empate: -1
+    - Derrota: -2
     """
-    def __init__(self, jugador: Jugador, num_mazos: int = 4):
+    def __init__(self, jugador: Jugador, num_mazos: int = 4, precision_agrupacion: int = 20):
         super().__init__(jugador)
         self.num_mazos = num_mazos
-        self.resetear_conteo() # Inicializa todo
+        self.precision_agrupacion = precision_agrupacion
+        self.resetear_conteo()
+
+    # ... (funciones _get_idx, observar_carta, resetear_conteo, decidir_apuesta sin cambios) ...
+    def _get_idx(self, valor_carta: int) -> int:
+        if valor_carta == 11: return 0
+        return valor_carta - 1 if valor_carta < 10 else 9
+
+    def observar_carta(self, carta: Carta):
+        idx = self._get_idx(carta.valor)
+        if self.cartas_restantes[idx] > 0:
+            self.cartas_restantes[idx] -= 1
+
+    def resetear_conteo(self):
+        self.cartas_restantes = np.array([4 * self.num_mazos] * 9 + [16 * self.num_mazos])
+        self.memo_valor_estado = {}
+        self.memo_outcome_prob = {}
+        self.memo_dealer_dist = {}
+            
+    def decidir_apuesta(self, capital_actual: int = None) -> int:
+        return int(5)
+    
+    # ... (funciones de bucketing _crear_clave_agrupada, _calcular_dealer_recursivo sin cambios) ...
+    def _crear_clave_agrupada(self, cartas_restantes: np.ndarray) -> tuple:
+        total_restantes = np.sum(cartas_restantes)
+        if total_restantes == 0:
+            return (0, 0, 0, 0)
+        num_ases = cartas_restantes[0]
+        num_bajas = np.sum(cartas_restantes[1:6])
+        num_medias = np.sum(cartas_restantes[6:9])
+        num_altas = cartas_restantes[9]
+        p = self.precision_agrupacion
+        porc_ases_d = int( (num_ases / total_restantes) * p )
+        porc_bajas_d = int( (num_bajas / total_restantes) * p )
+        porc_medias_d = int( (num_medias / total_restantes) * p )
+        porc_altas_d = int( (num_altas / total_restantes) * p )
+        return (porc_ases_d, porc_bajas_d, porc_medias_d, porc_altas_d)
+
+    def _calcular_dealer_recursivo(self, mano_dealer: Mano, cartas_restantes: np.ndarray) -> dict:
+        valor_actual = mano_dealer.valor_total
+        key_recursiva = (valor_actual, mano_dealer.es_blanda, tuple(cartas_restantes))
+        temp_cache = {}
+        if key_recursiva in temp_cache:
+            return temp_cache[key_recursiva]
+        if valor_actual >= 17:
+            return {valor_actual: 1.0}
+        dist_prob_final = {}
+        total_cartas = np.sum(cartas_restantes)
+        if total_cartas == 0:
+             return {valor_actual: 1.0}
+        for i, count in enumerate(cartas_restantes):
+            if count > 0:
+                prob_carta = count / total_cartas
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
+                nuevas_cartas_restantes = cartas_restantes.copy()
+                nuevas_cartas_restantes[i] -= 1
+                nueva_carta = Carta(Palo.PICAS, Rango.from_valor(valor_carta))
+                sub_dist = self._calcular_dealer_recursivo(Mano(mano_dealer.cartas + [nueva_carta]), nuevas_cartas_restantes)
+                for v_final, p_sub in sub_dist.items():
+                    dist_prob_final[v_final] = dist_prob_final.get(v_final, 0) + prob_carta * p_sub
+        temp_cache[key_recursiva] = dist_prob_final
+        return dist_prob_final
+
+    # --- LÓGICA DE SIMULACIÓN Y CÁLCULO DE EV (SIN CAMBIOS EN SU ESTRUCTURA, PERO SÍ EN LAS RECOMPENSAS) ---
+    def _simular_dealer(self, mano_dealer: Mano, cartas_restantes: np.ndarray) -> dict:
+        clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
+        cache_key = (mano_dealer.valor_total, mano_dealer.es_blanda, clave_agrupada)
+        if cache_key in self.memo_dealer_dist:
+            return self.memo_dealer_dist[cache_key]
+        else:
+            dist_calculada = self._calcular_dealer_recursivo(mano_dealer, cartas_restantes)
+            self.memo_dealer_dist[cache_key] = dist_calculada
+            return dist_calculada
+
+    def _get_outcome_probabilities(self, valor_jugador: int, carta_dealer: Carta, cartas_restantes: np.ndarray) -> tuple[float, float, float]:
+        if valor_jugador > 21:
+            return (0.0, 1.0, 0.0)
+        
+        clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
+        prob_key = (valor_jugador, carta_dealer.valor, clave_agrupada)
+
+        if prob_key in self.memo_outcome_prob:
+            return self.memo_outcome_prob[prob_key]
+
+        dist_prob_dealer = self._simular_dealer(Mano([carta_dealer]), cartas_restantes)
+
+        prob_victoria, prob_derrota, prob_empate = 0.0, 0.0, 0.0
+        for valor_final_dealer, prob in dist_prob_dealer.items():
+            if valor_final_dealer > 21 or valor_jugador > valor_final_dealer:
+                prob_victoria += prob
+            elif valor_jugador < valor_final_dealer:
+                prob_derrota += prob
+            else:
+                prob_empate += prob
+        
+        resultado = (prob_victoria, prob_derrota, prob_empate)
+        self.memo_outcome_prob[prob_key] = resultado
+        return resultado
+
+    def _calcular_ev_plantarse(self, valor_jugador: int, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        prob_victoria, prob_derrota, prob_empate = self._get_outcome_probabilities(valor_jugador, carta_dealer, cartas_restantes)
+        # ================================================================= #
+        # === CAMBIO: Nueva fórmula de EV para la acción de plantarse. === #
+        return (prob_victoria * 2) - (prob_derrota * 2) - prob_empate
+        # ================================================================= #
+
+    def _calcular_ev_doblar(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        ev_total = 0.0
+        total_cartas = np.sum(cartas_restantes)
+        # ================================================================= #
+        # === CAMBIO: La recompensa por pasarse al doblar ahora es -4. === #
+        if total_cartas == 0: return -4.0
+        # ================================================================= #
+
+        for i, count in enumerate(cartas_restantes):
+            if count > 0:
+                prob_carta = count / total_cartas
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
+                
+                nuevas_cartas_restantes = cartas_restantes.copy()
+                nuevas_cartas_restantes[i] -= 1
+                
+                nueva_mano = Mano(mano_jugador.cartas + [Carta(Palo.PICAS, Rango.from_valor(valor_carta))])
+                
+                prob_victoria, prob_derrota, prob_empate = self._get_outcome_probabilities(nueva_mano.valor_total, carta_dealer, nuevas_cartas_restantes)
+                # ================================================================================== #
+                # === CAMBIO: Nueva fórmula de EV para cada resultado posible al doblar la apuesta. === #
+                ev_doblado = (prob_victoria * 4) - (prob_derrota * 4) - (prob_empate * 2)
+                # ================================================================================== #
+                ev_total += prob_carta * ev_doblado
+        return ev_total
+        
+    def _calcular_ev_pedir(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        ev_total = 0.0
+        total_cartas = np.sum(cartas_restantes)
+        if total_cartas == 0:
+            return self._calcular_ev_plantarse(mano_jugador.valor_total, carta_dealer, cartas_restantes)
+
+        for i, count in enumerate(cartas_restantes):
+            if count > 0:
+                prob_carta = count / total_cartas
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
+                nuevas_cartas_restantes = cartas_restantes.copy()
+                nuevas_cartas_restantes[i] -= 1
+                nueva_mano = Mano(mano_jugador.cartas + [Carta(Palo.PICAS, Rango.from_valor(valor_carta))])
+                valor_siguiente_estado = self._get_valor_estado(nueva_mano, carta_dealer, nuevas_cartas_restantes)
+                ev_total += prob_carta * valor_siguiente_estado
+        
+        return ev_total
+        
+    def _calcular_ev_dividir(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        # La lógica de dividir se mantiene: el EV es la suma de los EVs de las dos nuevas manos.
+        # El cambio en las recompensas se propagará automáticamente a través de la llamada a _get_valor_estado.
+        carta_dividida_valor = mano_jugador.cartas[0].valor
+        mano_dividida = Mano([Carta(Palo.PICAS, Rango.from_valor(carta_dividida_valor))])
+        ev_mano = self._get_valor_estado(mano_dividida, carta_dealer, cartas_restantes.copy())
+        return ev_mano * 2
+
+    def _get_valor_estado(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        # ================================================================================= #
+        # === CAMBIO: La recompensa por pasarse ahora es -2, en línea con una derrota. === #
+        if mano_jugador.valor_total > 21:
+            return -2.0
+        # ================================================================================= #
+
+        clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
+        estado_key = (mano_jugador.valor_total, mano_jugador.es_blanda, len(mano_jugador.cartas), carta_dealer.valor, clave_agrupada)
+        if estado_key in self.memo_valor_estado:
+            return self.memo_valor_estado[estado_key]
+
+        ev_plantarse = self._calcular_ev_plantarse(mano_jugador.valor_total, carta_dealer, cartas_restantes)
+        ev_pedir = self._calcular_ev_pedir(mano_jugador, carta_dealer, cartas_restantes)
+
+        valor_optimo = max(ev_plantarse, ev_pedir)
+        self.memo_valor_estado[estado_key] = valor_optimo
+        return valor_optimo
+
+    def decidir_accion(self, mano: Mano, carta_dealer: Carta) -> Accion:
+        if mano.es_blackjack or mano.valor_total > 21:
+            return Accion.PLANTARSE
+
+        acciones_ev = {}
+        acciones_ev[Accion.PLANTARSE] = self._calcular_ev_plantarse(mano.valor_total, carta_dealer, self.cartas_restantes.copy())
+        acciones_ev[Accion.PEDIR] = self._calcular_ev_pedir(mano, carta_dealer, self.cartas_restantes.copy())
+        
+        if len(mano.cartas) == 2:
+            acciones_ev[Accion.DOBLAR] = self._calcular_ev_doblar(mano, carta_dealer, self.cartas_restantes.copy())
+            if mano.cartas[0].rango == mano.cartas[1].rango:
+                acciones_ev[Accion.DIVIDIR] = self._calcular_ev_dividir(mano, carta_dealer, self.cartas_restantes.copy())
+
+        mejor_ev = max(acciones_ev.values())
+        
+        # ========================================================================================== #
+        # === CAMBIO: El valor de la rendición ahora se compara con -1 en la nueva escala de EV. === #
+        if len(mano.cartas) == 2 and -1.0 > mejor_ev:
+            return Accion.RENDIRSE
+        # ========================================================================================== #
+        
+        return max(acciones_ev, key=acciones_ev.get)
+    
+
+    
+class AgenteMarkov_normal(Agente):
+    """
+    Agente MDP que utiliza una clave de caché AGRUPADA para una eficiencia drásticamente mejorada.
+    En lugar de usar el estado exacto del mazo, agrupa las cartas restantes en porcentajes
+    discretizados, permitiendo una reutilización masiva de los cálculos.
+    """
+    def __init__(self, jugador: Jugador, num_mazos: int = 4, precision_agrupacion: int = 20):
+        super().__init__(jugador)
+        self.num_mazos = num_mazos
+        # La precisión define en cuántos "buckets" se divide cada porcentaje. 
+        # 10 = buckets de 10%. 20 = buckets de 5%.
+        self.precision_agrupacion = precision_agrupacion
+        self.resetear_conteo()
 
     def _get_idx(self, valor_carta: int) -> int:
         if valor_carta == 11: return 0
@@ -117,20 +330,48 @@ class AgenteMarkov(Agente):
         self.memo_dealer_dist = {}
             
     def decidir_apuesta(self, capital_actual: int = None) -> int:
-        capital = capital_actual if capital_actual is not None else self.jugador.capital
-        apuesta_base = int(capital * 0.05)
-        return max(10, apuesta_base) if capital > 10 else 0
+        # Por ahora, apuesta fija para centrarnos en la estrategia de juego.
+        return int(5)
 
-    def _simular_dealer(self, mano_dealer: Mano, cartas_restantes: np.ndarray) -> dict:
+    # --- NUEVAS FUNCIONES PARA AGRUPACIÓN DE ESTADOS ---
+
+    def _crear_clave_agrupada(self, cartas_restantes: np.ndarray) -> tuple:
         """
-        Calcula y memoiza la distribución de probabilidad de la mano final del dealer.
-        Este es el "subcomponente" fundamental y más reutilizable.
+        Convierte el vector de cartas restantes en una clave simplificada y de baja dimensionalidad.
+        Esta es la clave para resolver el problema de rendimiento.
+        """
+        total_restantes = np.sum(cartas_restantes)
+        if total_restantes == 0:
+            return (0, 0, 0, 0) # Estado especial para mazo vacío
+
+        # Agrupar cartas: Ases, Bajas (2-6), Medias (7-9), Altas (10s)
+        num_ases = cartas_restantes[0]
+        num_bajas = np.sum(cartas_restantes[1:6])
+        num_medias = np.sum(cartas_restantes[6:9])
+        num_altas = cartas_restantes[9]
+
+        # Calcular porcentajes y discretizarlos ("bucketing")
+        p = self.precision_agrupacion
+        porc_ases_d = int( (num_ases / total_restantes) * p )
+        porc_bajas_d = int( (num_bajas / total_restantes) * p )
+        porc_medias_d = int( (num_medias / total_restantes) * p )
+        porc_altas_d = int( (num_altas / total_restantes) * p )
+        
+        return (porc_ases_d, porc_bajas_d, porc_medias_d, porc_altas_d)
+
+    def _calcular_dealer_recursivo(self, mano_dealer: Mano, cartas_restantes: np.ndarray) -> dict:
+        """
+        La función de cálculo de "fuerza bruta" original. Se llama solo cuando
+        un estado agrupado no se encuentra en el caché.
         """
         valor_actual = mano_dealer.valor_total
-        key = (valor_actual, mano_dealer.es_blanda, tuple(cartas_restantes))
         
-        if key in self.memo_dealer_dist:
-            return self.memo_dealer_dist[key]
+        # OJO: Se usa una clave EXACTA para la recursión interna para garantizar la corrección.
+        # El caché aquí es temporal, solo para esta llamada de fuerza bruta.
+        key_recursiva = (valor_actual, mano_dealer.es_blanda, tuple(cartas_restantes))
+        temp_cache = {}
+        if key_recursiva in temp_cache:
+            return temp_cache[key_recursiva]
 
         if valor_actual >= 17:
             return {valor_actual: 1.0}
@@ -142,35 +383,50 @@ class AgenteMarkov(Agente):
 
         for i, count in enumerate(cartas_restantes):
             if count > 0:
-                # ... (lógica de recursión, sin cambios) ...
                 prob_carta = count / total_cartas
-                valor_carta = 11 if i == 0 else i + 1
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
+                
                 nuevas_cartas_restantes = cartas_restantes.copy()
                 nuevas_cartas_restantes[i] -= 1
+                
                 nueva_carta = Carta(Palo.PICAS, Rango.from_valor(valor_carta))
-                sub_dist = self._simular_dealer(Mano(mano_dealer.cartas + [nueva_carta]), nuevas_cartas_restantes)
+                sub_dist = self._calcular_dealer_recursivo(Mano(mano_dealer.cartas + [nueva_carta]), nuevas_cartas_restantes)
+                
                 for v_final, p_sub in sub_dist.items():
                     dist_prob_final[v_final] = dist_prob_final.get(v_final, 0) + prob_carta * p_sub
         
-        self.memo_dealer_dist[key] = dist_prob_final
+        temp_cache[key_recursiva] = dist_prob_final
         return dist_prob_final
 
+    def _simular_dealer(self, mano_dealer: Mano, cartas_restantes: np.ndarray) -> dict:
+        """
+        Función directora: Intenta usar el caché con una clave agrupada. Si falla,
+        realiza el cálculo completo y almacena el resultado bajo esa clave agrupada.
+        """
+        clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
+        
+        # La clave para el caché principal incluye la mano inicial del dealer
+        cache_key = (mano_dealer.valor_total, mano_dealer.es_blanda, clave_agrupada)
+
+        if cache_key in self.memo_dealer_dist:
+            return self.memo_dealer_dist[cache_key]
+        else:
+            dist_calculada = self._calcular_dealer_recursivo(mano_dealer, cartas_restantes)
+            self.memo_dealer_dist[cache_key] = dist_calculada
+            return dist_calculada
+
     def _get_outcome_probabilities(self, valor_jugador: int, carta_dealer: Carta, cartas_restantes: np.ndarray) -> tuple[float, float, float]:
-        """
-        Usa la distribución del dealer (del caché profundo) para calcular y memoizar
-        las probabilidades de resultado (victoria, derrota, empate).
-        """
         if valor_jugador > 21:
             return (0.0, 1.0, 0.0)
+        
+        clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
+        prob_key = (valor_jugador, carta_dealer.valor, clave_agrupada)
 
-        prob_key = (valor_jugador, carta_dealer.valor, tuple(cartas_restantes))
         if prob_key in self.memo_outcome_prob:
             return self.memo_outcome_prob[prob_key]
 
-        # 1. Obtener el subcomponente: la distribución del dealer (esto estará fuertemente cacheado)
         dist_prob_dealer = self._simular_dealer(Mano([carta_dealer]), cartas_restantes)
 
-        # 2. Calcular las probabilidades finales usando la distribución del dealer
         prob_victoria, prob_derrota, prob_empate = 0.0, 0.0, 0.0
         for valor_final_dealer, prob in dist_prob_dealer.items():
             if valor_final_dealer > 21 or valor_jugador > valor_final_dealer:
@@ -196,7 +452,7 @@ class AgenteMarkov(Agente):
         for i, count in enumerate(cartas_restantes):
             if count > 0:
                 prob_carta = count / total_cartas
-                valor_carta = 11 if i == 0 else i + 1
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
                 
                 nuevas_cartas_restantes = cartas_restantes.copy()
                 nuevas_cartas_restantes[i] -= 1
@@ -211,15 +467,17 @@ class AgenteMarkov(Agente):
     def _calcular_ev_pedir(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
         ev_total = 0.0
         total_cartas = np.sum(cartas_restantes)
+        if total_cartas == 0:
+            return self._calcular_ev_plantarse(mano_jugador.valor_total, carta_dealer, cartas_restantes)
 
         for i, count in enumerate(cartas_restantes):
             if count > 0:
                 prob_carta = count / total_cartas
-                valor_carta = 11 if i == 0 else i + 1
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
                 
                 nuevas_cartas_restantes = cartas_restantes.copy()
                 nuevas_cartas_restantes[i] -= 1
-
+                
                 nueva_mano = Mano(mano_jugador.cartas + [Carta(Palo.PICAS, Rango.from_valor(valor_carta))])
                 valor_siguiente_estado = self._get_valor_estado(nueva_mano, carta_dealer, nuevas_cartas_restantes)
                 ev_total += prob_carta * valor_siguiente_estado
@@ -236,7 +494,9 @@ class AgenteMarkov(Agente):
         if mano_jugador.valor_total > 21:
             return -1.0
 
-        estado_key = (mano_jugador.valor_total, mano_jugador.es_blanda, len(mano_jugador.cartas), carta_dealer.valor, tuple(cartas_restantes))
+        # La clave de valor AÚN usa la clave agrupada para eficiencia
+        clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
+        estado_key = (mano_jugador.valor_total, mano_jugador.es_blanda, len(mano_jugador.cartas), carta_dealer.valor, clave_agrupada)
         if estado_key in self.memo_valor_estado:
             return self.memo_valor_estado[estado_key]
 
@@ -248,10 +508,6 @@ class AgenteMarkov(Agente):
         return valor_optimo
 
     def decidir_accion(self, mano: Mano, carta_dealer: Carta) -> Accion:
-        """
-        Decide la acción óptima. YA NO LIMPIA LOS CACHÉS.
-        Los cachés ahora persisten durante todo el zapato.
-        """
         if mano.es_blackjack or mano.valor_total > 21:
             return Accion.PLANTARSE
 

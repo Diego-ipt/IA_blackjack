@@ -14,7 +14,7 @@ class AgenteAleatorio_5(Agente):
         Realiza una apuesta estándar del 5% del capital del jugador.
         """
 
-        return int(self.jugador.capital * 0.05)
+        return int(5)
 
     def decidir_accion(self, mano: Mano, carta_dealer: Carta):
         """

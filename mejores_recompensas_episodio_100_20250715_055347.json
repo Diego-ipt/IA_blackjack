@@ -1,0 +1,12 @@
+{
+    "episodio": 100,
+    "mejor_recompensa": -833.0,
+    "recompensas_optimas": {
+        "win_score": 0.7007257342338562,
+        "win_dealer_bust": 0.44775745272636414,
+        "tie": -1.088423252105713,
+        "loss_score": -1.3163082599639893,
+        "player_bust": -1.0458488464355469
+    },
+    "timestamp": "20250715_055347"
+}

@@ -32,9 +32,6 @@ class AgenteMarkov_RL(Agente):
         self.memo_valor_estado.clear()
         self.memo_outcome_prob.clear()
 
-    # ... (El resto del código de __init__, _get_idx, observar_carta, resetear_conteo, 
-    #      decidir_apuesta, _crear_clave_agrupada, _calcular_dealer_recursivo, _simular_dealer
-    #      permanece idéntico a la versión anterior. Se omite por brevedad) ...
     def _get_idx(self, valor_carta: int) -> int:
         if valor_carta == 11: return 0
         return valor_carta - 1 if valor_carta < 10 else 9
@@ -103,8 +100,6 @@ class AgenteMarkov_RL(Agente):
             self.memo_dealer_dist[cache_key] = dist_calculada
             return dist_calculada
     
-    # ========================================================================= #
-    # === CAMBIO: Ahora devuelve un diccionario con 5 probabilidades. === #
     def _get_outcome_distribution(self, valor_jugador: int, carta_dealer: Carta, cartas_restantes: np.ndarray) -> dict:
         clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
         prob_key = (valor_jugador, carta_dealer.valor, clave_agrupada)
@@ -112,7 +107,6 @@ class AgenteMarkov_RL(Agente):
         if prob_key in self.memo_outcome_prob:
             return self.memo_outcome_prob[prob_key]
 
-        # Si el jugador se pasa, el resultado es simple
         if valor_jugador > 21:
             return {'win_score': 0, 'win_dealer_bust': 0, 'tie': 0, 'loss_score': 0, 'player_bust': 1.0}
 
@@ -135,8 +129,6 @@ class AgenteMarkov_RL(Agente):
 
     def _calcular_ev_plantarse(self, valor_jugador: int, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
         dist = self._get_outcome_distribution(valor_jugador, carta_dealer, cartas_restantes)
-        
-        # Calculamos el EV como el producto punto de las probabilidades y las recompensas
         ev = sum(dist[key] * self.recompensas[key] for key in dist)
         return ev
 
@@ -147,32 +139,55 @@ class AgenteMarkov_RL(Agente):
 
         for i, count in enumerate(cartas_restantes):
             if count > 0:
-                # ... (lógica de bucle sin cambios) ...
                 prob_carta = count / total_cartas
                 valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
                 nuevas_cartas_restantes = cartas_restantes.copy()
                 nuevas_cartas_restantes[i] -= 1
                 nueva_mano = Mano(mano_jugador.cartas + [Carta(Palo.PICAS, Rango.from_valor(valor_carta))])
-
                 dist = self._get_outcome_distribution(nueva_mano.valor_total, carta_dealer, nuevas_cartas_restantes)
-                
-                # El EV doblado es el producto punto, pero con recompensas duplicadas
                 ev_doblado = sum(dist[key] * self.recompensas[key] * 2 for key in dist)
                 ev_total += prob_carta * ev_doblado
         return ev_total
 
+    # ========================================================================= #
+    # === ESTAS DOS FUNCIONES FALTABAN. LAS AÑADIMOS DE NUEVO. === #
+    # ========================================================================= #
+    def _calcular_ev_pedir(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        ev_total = 0.0
+        total_cartas = np.sum(cartas_restantes)
+        if total_cartas == 0:
+            return self._calcular_ev_plantarse(mano_jugador.valor_total, carta_dealer, cartas_restantes)
+        
+        for i, count in enumerate(cartas_restantes):
+            if count > 0:
+                prob_carta = count / total_cartas
+                valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
+                nuevas_cartas_restantes = cartas_restantes.copy()
+                nuevas_cartas_restantes[i] -= 1
+                nueva_mano = Mano(mano_jugador.cartas + [Carta(Palo.PICAS, Rango.from_valor(valor_carta))])
+                valor_siguiente_estado = self._get_valor_estado(nueva_mano, carta_dealer, nuevas_cartas_restantes)
+                ev_total += prob_carta * valor_siguiente_estado
+        
+        return ev_total
+        
+    def _calcular_ev_dividir(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
+        carta_dividida_valor = mano_jugador.cartas[0].valor
+        mano_dividida = Mano([Carta(Palo.PICAS, Rango.from_valor(carta_dividida_valor))])
+        ev_mano = self._get_valor_estado(mano_dividida, carta_dealer, cartas_restantes.copy())
+        return ev_mano * 2
+
     def _get_valor_estado(self, mano_jugador: Mano, carta_dealer: Carta, cartas_restantes: np.ndarray) -> float:
-        # La recompensa por pasarse ahora es configurable
         if mano_jugador.valor_total > 21:
             return self.recompensas['player_bust']
 
-        # ... (el resto de la función de DP es la misma, pero ahora depende de los nuevos cálculos de EV) ...
         clave_agrupada = self._crear_clave_agrupada(cartas_restantes)
         estado_key = (mano_jugador.valor_total, mano_jugador.es_blanda, len(mano_jugador.cartas), carta_dealer.valor, clave_agrupada)
         if estado_key in self.memo_valor_estado:
             return self.memo_valor_estado[estado_key]
+        
         ev_plantarse = self._calcular_ev_plantarse(mano_jugador.valor_total, carta_dealer, cartas_restantes)
         ev_pedir = self._calcular_ev_pedir(mano_jugador, carta_dealer, cartas_restantes)
+
         valor_optimo = max(ev_plantarse, ev_pedir)
         self.memo_valor_estado[estado_key] = valor_optimo
         return valor_optimo
@@ -180,15 +195,22 @@ class AgenteMarkov_RL(Agente):
     def decidir_accion(self, mano: Mano, carta_dealer: Carta) -> Accion:
         if mano.es_blackjack or mano.valor_total > 21:
             return Accion.PLANTARSE
+        
         acciones_ev = {}
         acciones_ev[Accion.PLANTARSE] = self._calcular_ev_plantarse(mano.valor_total, carta_dealer, self.cartas_restantes.copy())
         acciones_ev[Accion.PEDIR] = self._calcular_ev_pedir(mano, carta_dealer, self.cartas_restantes.copy())
+        
         if len(mano.cartas) == 2:
             acciones_ev[Accion.DOBLAR] = self._calcular_ev_doblar(mano, carta_dealer, self.cartas_restantes.copy())
             if mano.cartas[0].rango == mano.cartas[1].rango:
                 acciones_ev[Accion.DIVIDIR] = self._calcular_ev_dividir(mano, carta_dealer, self.cartas_restantes.copy())
+        
         mejor_ev = max(acciones_ev.values())
-        ev_rendirse = self.recompensas['derrota'] / 2.0
+
+        # El valor de la rendición es la mitad de la recompensa por derrota (ya que se pierde media apuesta)
+        # Asumiendo que la recompensa por derrota es negativa, su mitad es un número mayor (más cercano a cero).
+        ev_rendirse = self.recompensas.get('loss_score', -1.0) / 2.0
         if len(mano.cartas) == 2 and ev_rendirse > mejor_ev:
             return Accion.RENDIRSE
+            
         return max(acciones_ev, key=acciones_ev.get)

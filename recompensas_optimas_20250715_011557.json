@@ -1,0 +1,7 @@
+{
+    "win_score": 0.5,
+    "win_dealer_bust": 0.5,
+    "tie": 0.003205908229574561,
+    "loss_score": -0.5,
+    "player_bust": -0.5
+}

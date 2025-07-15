@@ -1,9 +1,10 @@
-import gym
+import gymnasium as gym
 import numpy as np
 import json
 import datetime
 import os
 from stable_baselines3 import PPO
+from stable_baselines3.common.callbacks import BaseCallback
 
 # Asegúrate de que las importaciones apunten a la ubicación correcta de tus archivos
 from core.casino import Casino
@@ -16,7 +17,7 @@ from agents.markov_RL import AgenteMarkov_RL
 
 class BlackjackRewardEnv(gym.Env):
     """
-    Un entorno de Gym donde una 'acción' es elegir la estructura de recompensas
+    Un entorno de Gymnasium donde una 'acción' es elegir la estructura de recompensas
     y la 'recompensa' para el meta-agente es el rendimiento financiero del AgenteMarkov.
     """
     def __init__(self, num_rondas_simulacion=1000, capital_inicial=10000):
@@ -28,8 +29,8 @@ class BlackjackRewardEnv(gym.Env):
         # ESPACIO DE ACCIONES: Los 5 valores de recompensa que queremos aprender.
         # [R_win_score, R_win_dealer_bust, R_tie, R_loss_score, R_player_bust]
         # Límites generosos para permitir al agente explorar libremente.
-        low_bounds = np.array([0.5, 0.5, -1.5, -1.5, -1.5], dtype=np.float32)
-        high_bounds = np.array([1.5, 1.5, 0.5, -0.5, -0.5], dtype=np.float32)
+        low_bounds = np.array([-5.0, -5.0, -5.0, -5.0, -5.0], dtype=np.float32)
+        high_bounds = np.array([5.0, 5.0, 5.0, 0.0, 0.0], dtype=np.float32)
         self.action_space = gym.spaces.Box(low=low_bounds, high=high_bounds, dtype=np.float32)
         
         # ESPACIO DE OBSERVACIÓN: Simple para este ejemplo, no usamos un estado complejo.
@@ -67,17 +68,97 @@ class BlackjackRewardEnv(gym.Env):
 
         # El episodio del meta-agente termina después de cada simulación
         done = True
+        terminated = True
+        truncated = False
         
         # Devolvemos una observación placeholder, la recompensa, y que el episodio ha terminado
-        return np.array([0]), reward, done, {}
+        return np.array([0], dtype=np.float32), reward, terminated, truncated, {}
 
-    def reset(self):
+    def reset(self, seed=None, options=None):
         # Reinicia el entorno para una nueva prueba de recompensas
-        return np.array([0])
+        super().reset(seed=seed)
+        return np.array([0], dtype=np.float32), {}
 
     def close(self):
         # Limpieza si es necesario
         print("Entorno cerrado.")
+
+# --------------------------------------------------------------------------- #
+# 1.5. Callback para Guardar Mejores Recompensas Periódicamente
+# --------------------------------------------------------------------------- #
+
+class BestRewardsCallback(BaseCallback):
+    """
+    Callback personalizado para guardar las mejores recompensas cada cierto número de episodios
+    """
+    def __init__(self, env, save_freq=20, verbose=0):
+        super(BestRewardsCallback, self).__init__(verbose)
+        self.env = env
+        self.save_freq = save_freq
+        self.best_reward = float('-inf')
+        self.best_action = None
+        self.episode_count = 0
+        self.filename = "mejores_recompensas_progreso.json"
+        self.historial = []
+        
+    def _on_step(self) -> bool:
+        # En nuestro entorno, cada step es un episodio completo
+        self.episode_count += 1
+        
+        # Obtener la última recompensa
+        if len(self.locals.get('rewards', [])) > 0:
+            current_reward = self.locals['rewards'][-1]
+            
+            # Si encontramos una mejor recompensa, la guardamos
+            if current_reward > self.best_reward:
+                self.best_reward = current_reward
+                # Obtener la acción que generó esta recompensa
+                if len(self.locals.get('actions', [])) > 0:
+                    self.best_action = self.locals['actions'][-1]
+                    
+                if self.verbose > 0:
+                    print(f"\n🎯 Nueva mejor recompensa encontrada: {self.best_reward}")
+        
+        # Guardar cada save_freq episodios
+        if self.episode_count % self.save_freq == 0:
+            self._save_best_rewards()
+            
+        return True
+    
+    def _save_best_rewards(self):
+        if self.best_action is not None:
+            recompensas_actuales = {
+                'win_score': float(self.best_action[0]),
+                'win_dealer_bust': float(self.best_action[1]),
+                'tie': float(self.best_action[2]),
+                'loss_score': float(self.best_action[3]),
+                'player_bust': float(self.best_action[4])
+            }
+            
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            
+            # Añadir al historial
+            checkpoint = {
+                'episodio': self.episode_count,
+                'mejor_recompensa': float(self.best_reward),
+                'recompensas_optimas': recompensas_actuales,
+                'timestamp': timestamp
+            }
+            self.historial.append(checkpoint)
+            
+            # Guardar todo el historial en el mismo archivo
+            data_to_save = {
+                'ultimo_checkpoint': checkpoint,
+                'historial_completo': self.historial,
+                'total_episodios_entrenados': self.episode_count
+            }
+            
+            try:
+                with open(self.filename, 'w', encoding='utf-8') as f:
+                    json.dump(data_to_save, f, indent=4)
+                print(f"💾 Actualizado: {self.filename} (Episodio {self.episode_count}, Recompensa: {self.best_reward})")
+            except Exception as e:
+                print(f"❌ Error al guardar archivo: {e}")
 
 # --------------------------------------------------------------------------- #
 # 2. Función Principal para Entrenar y Guardar los Resultados
@@ -90,22 +171,28 @@ def entrenar_y_guardar_recompensas():
     TOTAL_EPISODIOS = 100
     # Número de rondas de Blackjack a simular en CADA episodio.
     RONDAS_POR_EPISODIO = 1000
+    # Frecuencia de guardado (cada cuántos episodios guardar)
+    SAVE_FREQ = 20
 
     print("Creando entorno de RL para optimizar recompensas...")
     env = BlackjackRewardEnv(num_rondas_simulacion=RONDAS_POR_EPISODIO)
+    
+    # Crear el callback para guardar mejores recompensas
+    callback = BestRewardsCallback(env, save_freq=SAVE_FREQ, verbose=1)
     
     # Crear el modelo PPO. 'verbose=1' mostrará el progreso del entrenamiento.
     model = PPO("MlpPolicy", env, verbose=1, ent_coef=0.01, n_steps=20)
 
     print(f"\nIniciando entrenamiento por {TOTAL_EPISODIOS} episodios...")
+    print(f"💾 Se guardarán las mejores recompensas cada {SAVE_FREQ} episodios")
     # El total de timesteps es igual al número de episodios ya que cada step=done
-    model.learn(total_timesteps=TOTAL_EPISODIOS)
+    model.learn(total_timesteps=TOTAL_EPISODIOS, callback=callback)
     print("Entrenamiento completado.")
 
     # --- Predecir y Guardar la Mejor Estructura de Recompensas ---
     
     print("\nCalculando la estructura de recompensas óptima encontrada...")
-    obs = env.reset()
+    obs, _ = env.reset()  # Extract only the observation, ignore info
     mejor_recompensa_vector, _ = model.predict(obs, deterministic=True)
     
     recompensas_optimas = {

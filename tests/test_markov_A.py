@@ -5,6 +5,7 @@ import os
 from core.player import Jugador
 from core.casino import Casino
 from agents.markov import AgenteMarkov_arriesgado, AgenteMarkov_normal
+from agents.markov_RL import AgenteMarkov_RL
 from agents.agente_A_5 import AgenteAleatorio_5
 
 # ========== CONFIGURACIÓN ==========

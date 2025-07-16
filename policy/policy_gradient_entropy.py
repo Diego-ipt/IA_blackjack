@@ -151,7 +151,8 @@ class ApuestaConPolicyGradient:
         progreso = self.pasos_episodio / 100  # Progreso del episodio normalizado
 
         # Calcula tendencia y volatilidad de las últimas 10 recompensas
-        ultimas_recompensas = np.array(self.recompensas[-10:]) if len(self.recompensas) >= 10 else np.zeros(10)
+        ultimas_recompensas = np.array(list(self.recompensas)[-10:]) if len(self.recompensas) >= 10 else np.zeros(10)
+
         tendencia = np.mean(ultimas_recompensas) / (self.capital_inicial + 1e-8)  # Normalizada por capital inicial
         volatilidad = np.std(ultimas_recompensas) / (self.capital_inicial + 1e-8)  # Normalizada por capital inicial
 
@@ -162,7 +163,7 @@ class ApuestaConPolicyGradient:
         Selecciona un porcentaje de apuesta dentro del rango configurado,
         con exploración controlada por la entropía.
 
-        Usa una política gaussiana con el porcentaje basico dado por la red
+        Usa una política gaussiana con media predicha por la red
         y desviación estándar controlada por entropia_peso.
         """
         # La red predice la media de la distribución (entre 0 y 1)
@@ -211,20 +212,23 @@ class ApuestaConPolicyGradient:
         """
         Calcula el gradiente de la entropía para una distribución gaussiana.
         """
-        return self.entropia_peso * (1.0 - 2.0 * porcentaje_base)  # (Fomenta valores intermedios)
+        return self.entropia_peso * (1.0 - 2.0 * porcentaje_base)  # Fomenta valores intermedios
 
     def entrenar(self):
         """
-        Entrena la política usando Policy Gradient con regularización de entropía.
-
+        Entrena la política usando policy Gradient con regularización de entropía.
         """
+        if not self.estados or not self.recompensas:
+            print("No hay suficientes datos para entrenar la política.")
+            return None
+
         # Prepara los datos de entrenamiento
         estados = np.vstack(self.estados)
         porcentajes_apostados = np.array(self.porcentajes_apostados).reshape(-1, 1)
 
         # Normaliza los porcentajes al rango [0,1] para el entrenamiento
         porcentajes_normalizados = (porcentajes_apostados - self.rango_apuesta[0]) / (
-                    self.rango_apuesta[1] - self.rango_apuesta[0])
+                self.rango_apuesta[1] - self.rango_apuesta[0])
 
         # Calcula recompensas descontadas y normalizadas
         recompensas = self.calcular_recompensas_descuento()
@@ -242,19 +246,18 @@ class ApuestaConPolicyGradient:
             gradiente_entropia  # Regularización por entropía
         )
 
-        # Reduce progresivamente la entropía (menos exploración con el tiempo)
-        self.entropia_peso = max(
-            self.entropia_min,  # No permite que baje del mínimo
-            self.entropia_peso * self.decaimiento_entropia  # Aplica decaimiento
-        )
+        # Reduce progresivamente la entropía
+        self.entropia_peso = max(self.entropia_min, self.entropia_peso * self.decaimiento_entropia)
 
-        # Registra el rendimiento y limpia los buffers del episodio
+        # Limpia buffers y registra
         self.historial_recompensas.append(sum(self.recompensas))
         self.num_episodios += 1
         self.pasos_episodio = 0
         self.estados.clear()
         self.porcentajes_apostados.clear()
         self.recompensas.clear()
+
+        print(f"Política entrenada - Pérdida: {perdida:.4f}, Capital: {self.capital_actual:.2f}")
 
         return perdida
 
@@ -265,3 +268,84 @@ class ApuestaConPolicyGradient:
 
     def obtener_capital(self):
         return self.capital_actual
+
+
+    #Guardar pesos para poder utilizar más adelantes
+
+    def guardar_pesos(self, filename):
+        """
+        Guarda los pesos y sesgos de la red neuronal en un archivo .npz de manera segura.
+
+        """
+        try:
+            # Convertir cada capa a arrays numpy y guardar individualmente
+            pesos_dict = {}
+            sesgos_dict = {}
+
+            for i, (peso, sesgo) in enumerate(zip(self.red_politica.pesos, self.red_politica.sesgos)):
+                pesos_dict[f'pesos_{i}'] = peso
+                sesgos_dict[f'sesgos_{i}'] = sesgo
+
+            # Guardar en un solo archivo comprimido
+            np.savez_compressed(
+                filename,
+                num_capas=len(self.red_politica.pesos),
+                **pesos_dict,
+                **sesgos_dict
+            )
+            print(f"Pesos guardados correctamente en {filename}.npz")
+        except Exception as e:
+            print(f"Error al guardar pesos: {str(e)}")
+            raise
+
+    def cargar_pesos(self, filename):
+        """
+        Carga los pesos y sesgos desde un archivo .npz de manera segura con validación mejorada
+
+        """
+        try:
+            # Cargar archivo
+            datos = np.load(filename, allow_pickle=True)
+
+            # Obtener número de capas
+            if 'num_capas' not in datos:
+                raise ValueError("El archivo no contiene el número de capas")
+
+            num_capas = int(datos['num_capas'])
+            nuevos_pesos = []
+            nuevos_sesgos = []
+
+            # Cargar cada capa
+            for i in range(num_capas):
+                peso_key = f'pesos_{i}'
+                sesgo_key = f'sesgos_{i}'
+
+                if peso_key not in datos:
+                    raise ValueError(f"No se encontraron pesos para la capa {i}")
+                if sesgo_key not in datos:
+                    raise ValueError(f"No se encontraron sesgos para la capa {i}")
+
+                nuevos_pesos.append(datos[peso_key])
+                nuevos_sesgos.append(datos[sesgo_key])
+
+            # Validación de dimensiones
+            if len(nuevos_pesos) != len(nuevos_sesgos):
+                raise ValueError("Número de capas de pesos y sesgos no coincide")
+
+            # Verificar consistencia interna de las dimensiones cargadas
+            for i in range(1, num_capas):
+                if nuevos_pesos[i].shape[0] != nuevos_pesos[i - 1].shape[1]:
+                    raise ValueError(f"Dimensión incompatible entre capa {i - 1} y {i}")
+                if nuevos_pesos[i].shape[1] != nuevos_sesgos[i].shape[0]:
+                    raise ValueError(f"Dimensión incompatible en capa {i}")
+
+            # Si todo está bien, reemplazar los pesos
+            self.red_politica.pesos = nuevos_pesos
+            self.red_politica.sesgos = nuevos_sesgos
+
+            print(f" Pesos cargados correctamente desde {filename}")
+            return True
+
+        except Exception as e:
+            print(f" Error al cargar pesos: {str(e)}")
+            return False

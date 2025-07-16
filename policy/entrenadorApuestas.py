@@ -93,7 +93,7 @@ class EntrenadorApuestas:
         """Guarda el progreso del entrenamiento en un archivo CSV usando pandas"""
         filename = f"entrenamiento_apuestas_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
         guardar_historial_csv(self.historial, filename)
-        print(f"\nResultados del entrenamiento guardados en '{filename}'")
+        print(f"\n Resultados del entrenamiento guardados en '{filename}'")
 
 
 
@@ -119,7 +119,7 @@ class EntrenadorApuestas:
         self.casino.jugar_partida(rondas)
         capital_final = self.jugador.capital
         roi = (capital_final - self.capital_inicial) / self.capital_inicial * 100
-        print(f" Evaluación {nombre}: Capital final = ${capital_final:,.2f} (ROI: {roi:.2f}%)")
+        print(f"Evaluación {nombre}: Capital final = ${capital_final:,.2f} (ROI: {roi:.2f}%)")
 
     def _mostrar_resumen(self):
         """Muestra un resumen estadístico del entrenamiento"""

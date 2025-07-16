@@ -81,7 +81,7 @@ class AgenteMarkov_PoliticaApuestas(Agente):
         self.memo_outcome_prob.clear()
         self.memo_dealer_dist.clear()
 
-        # Reset policy Gradient
+        # Reset Policy Gradient
         self.pg_apuestas.capital_actual = self.jugador.capital
 
         if reset_completo:
@@ -380,5 +380,12 @@ class AgenteMarkov_PoliticaApuestas(Agente):
             mejor_ev = max(acciones_ev.values())
             if -0.5 > mejor_ev:
                 return Accion.RENDIRSE
-
         return max(acciones_ev, key=acciones_ev.get)
+
+
+    def registrar_resultado(self, tipo: str):
+        """
+        Registra un resultado de la ronda (ganadas, perdidas o empatadas).
+        """
+        if tipo in self.contador_resultados:
+            self.contador_resultados[tipo] += 1

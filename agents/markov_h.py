@@ -4,51 +4,61 @@ from core.acciones import Accion
 from core.player import Jugador, Mano
 from core.cartas import Carta, Rango, Palo
 
-class AgenteMarkov_prob_estable_por_umbral(Agente):
+"""
+El factor_riesgo_escala: Este es tu nuevo "dial de agresividad".
+factor_riesgo_escala = 0: El agente ignora el Hi-Lo y es un Markov puro.
+factor_riesgo_escala = 0.05 (defecto): El Hi-Lo da un pequeño "empujón". En la mayoría de los casos, la decisión del Markov prevalecerá, pero cuando los EV de dos acciones sean muy cercanos, el Hi-Lo actuará como desempate.
+factor_riesgo_escala = 0.2: El Hi-Lo tiene una influencia muy fuerte y puede hacer que el agente tome decisiones que contradicen el cálculo de EV puro.
+"""
+
+class AgenteHibrido_Markov_HiLo(Agente):
     """
-    Agente MDP con una estrategia de probabilidad estable actualizada por umbrales
-    y con recompensas personalizables.
+    Agente Híbrido que combina un modelo MDP con un conteo Hi-Lo como factor de riesgo.
+
+    1. Calcula el Valor Esperado (EV) de cada acción usando un modelo de Markov
+       con probabilidades actualizadas por umbrales.
+    2. Mantiene un conteo de cartas Hi-Lo paralelo.
+    3. Usa el "Conteo Verdadero" del Hi-Lo para aplicar un "empujón" o "penalización"
+       al EV de cada acción, ajustando la decisión final basada en el riesgo situacional.
     """
-    def __init__(self, jugador: Jugador, num_mazos: int = 4, recompensas: dict = None):
+    def __init__(self, jugador: Jugador, num_mazos: int = 4, recompensas: dict = None, factor_riesgo_escala: float = 0.05):
         """
-        Inicializa el agente.
+        Inicializa el agente híbrido.
 
         Args:
             jugador (Jugador): El objeto jugador que este agente controlará.
             num_mazos (int): El número de mazos en el zapato.
-            recompensas (dict, optional): Un diccionario para personalizar las recompensas.
-                Ejemplo: {'victoria': 1.0, 'derrota': -1.0, 'empate': 0.0}.
-                Si es None, se usan los valores por defecto.
+            recompensas (dict, optional): Diccionario para personalizar las recompensas.
+            factor_riesgo_escala (float, optional): Controla la influencia del conteo Hi-Lo.
+                Un valor más alto hace que el agente sea más sensible al conteo.
         """
         super().__init__(jugador)
         self.num_mazos = num_mazos
         
-        # ================================================================= #
-        # === CAMBIO: Configuración de recompensas personalizables === #
-        self.recompensas = {
-            'victoria': 1.0,
-            'derrota': -1.0,
-            'empate': 0.0
-        }
+        self.recompensas = {'victoria': 1.0, 'derrota': -1.0, 'empate': 0.0}
         if recompensas is not None:
             self.recompensas.update(recompensas)
-        # ================================================================= #
+        
+        # Nuevo parámetro para la influencia del Hi-Lo
+        self.factor_riesgo_escala = factor_riesgo_escala
 
         self.resetear_conteo()
     
     def set_recompensas(self, nuevas_recompensas: dict):
+        self.recompensas.update(nuevas_recompensas)
+        
+    def set_factor_riesgo(self, nuevo_factor: float):
         """
-        Permite actualizar las recompensas del agente después de su inicialización.
+        Permite actualizar el factor de riesgo que determina la influencia
+        del conteo Hi-Lo en las decisiones del agente.
 
         Args:
-            nuevas_recompensas (dict): Un diccionario con las nuevas recompensas.
-                Solo las claves proporcionadas serán actualizadas.
-                Ejemplo: {'victoria': 1.5, 'derrota': -1.0, 'empate': -0.5}
+            nuevo_factor (float): El nuevo valor para la escala del factor de riesgo.
         """
-        self.recompensas.update(nuevas_recompensas)
+        self.factor_riesgo_escala = nuevo_factor
 
     def _get_idx(self, valor_carta: int) -> int:
-        if valor_carta == 11: return 0  # As
+        if valor_carta == 11: return 0
         return valor_carta - 1 if valor_carta < 10 else 9
 
     def _actualizar_probabilidades(self):
@@ -59,6 +69,7 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
             self.prob_dist_actual = np.zeros_like(self.cartas_restantes)
 
     def observar_carta(self, carta: Carta):
+        # --- Lógica del Modelo de Markov ---
         idx = self._get_idx(carta.valor)
         if self.cartas_restantes[idx] > 0:
             self.cartas_restantes[idx] -= 1
@@ -67,19 +78,37 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
             if (self.cartas_restantes[idx] == umbral_mitad or 
                 self.cartas_restantes[idx] == umbral_cero):
                 self._actualizar_probabilidades()
+        
+        # ================================================================= #
+        # === NUEVO: Lógica de conteo Hi-Lo en paralelo === #
+        # ================================================================= #
+        if carta.valor >= 2 and carta.valor <= 6:
+            self.conteo_hilo += 1
+        elif carta.valor >= 10: # 10, J, Q, K, As
+            self.conteo_hilo -= 1
 
     def resetear_conteo(self):
+        # --- Reseteo para el Modelo de Markov ---
         self.cartas_iniciales = np.array([4 * self.num_mazos] * 9 + [16 * self.num_mazos], dtype=float)
-        # CORRECCIÓN: Usar .copy() para evitar que ambos arrays apunten al mismo objeto
         self.cartas_restantes = self.cartas_iniciales.copy()
         self._actualizar_probabilidades()
         self.memo_valor_estado = {}
         self.memo_outcome_prob = {}
         self.memo_dealer_dist = {}
+        
+        # ================================================================= #
+        # === NUEVO: Reseteo para el conteo Hi-Lo === #
+        # ================================================================= #
+        self.conteo_hilo = 0
             
     def decidir_apuesta(self, capital_actual: int = None) -> int:
+        # (Aquí se podría implementar una apuesta variable basada en el Hi-Lo,
+        # pero por ahora lo mantenemos fijo para centrarnos en la estrategia de juego)
         return 5
 
+    # --- Todos los métodos de cálculo de EV (_calcular_ev_*, _get_valor_estado, etc.) ---
+    # --- permanecen SIN CAMBIOS. Calculan el EV "puro". ---
+    # (Se omite el código de los métodos de cálculo por brevedad, es idéntico al anterior)
     def _calcular_dealer_recursivo(self, mano_dealer: Mano, prob_dist: np.ndarray) -> dict:
         valor_actual = mano_dealer.valor_total
         key_recursiva = (valor_actual, mano_dealer.es_blanda, tuple(prob_dist))
@@ -120,7 +149,6 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
         return resultado
 
     def _get_valor_estado(self, mano_jugador: Mano, carta_dealer: Carta, prob_dist: np.ndarray) -> float:
-        # CAMBIO: La recompensa por pasarse ahora usa el diccionario de recompensas
         if mano_jugador.valor_total > 21:
             return self.recompensas['derrota']
         estado_key = (mano_jugador.valor_total, mano_jugador.es_blanda, len(mano_jugador.cartas), carta_dealer.valor, tuple(prob_dist))
@@ -134,22 +162,18 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
 
     def _calcular_ev_plantarse(self, valor_jugador: int, carta_dealer: Carta, prob_dist: np.ndarray) -> float:
         prob_victoria, prob_derrota, prob_empate = self._get_outcome_probabilities(valor_jugador, carta_dealer, prob_dist)
-        # CAMBIO: El EV se calcula usando el diccionario de recompensas
         return (prob_victoria * self.recompensas['victoria'] + 
                 prob_derrota * self.recompensas['derrota'] + 
                 prob_empate * self.recompensas['empate'])
 
     def _calcular_ev_doblar(self, mano_jugador: Mano, carta_dealer: Carta, prob_dist: np.ndarray) -> float:
         ev_total = 0.0
-        # CAMBIO: La penalización por no poder doblar usa el diccionario de recompensas
         if np.sum(prob_dist) == 0: return self.recompensas['derrota'] * 2
-
         for i, prob_carta in enumerate(prob_dist):
             if prob_carta > 0:
                 valor_carta = 11 if i == 0 else (10 if i == 9 else i + 1)
                 nueva_mano = Mano(mano_jugador.cartas + [Carta(Palo.PICAS, Rango.from_valor(valor_carta))])
                 prob_victoria, prob_derrota, prob_empate = self._get_outcome_probabilities(nueva_mano.valor_total, carta_dealer, prob_dist)
-                # CAMBIO: El EV se calcula usando el diccionario de recompensas y se duplica
                 ev_una_carta = (prob_victoria * self.recompensas['victoria'] + 
                                 prob_derrota * self.recompensas['derrota'] + 
                                 prob_empate * self.recompensas['empate'])
@@ -169,10 +193,8 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
         return ev_total
         
     def _calcular_ev_dividir(self, mano_jugador: Mano, carta_dealer: Carta, prob_dist: np.ndarray) -> float:
-        # CORRECCIÓN: Acceder al valor de la carta correctamente
         carta_dividida_valor = mano_jugador.cartas[0].valor
         mano_dividida = Mano([Carta(Palo.PICAS, Rango.from_valor(carta_dividida_valor))])
-        # El EV de una mano se calcula recursivamente, por lo que usará las recompensas correctas
         ev_mano = self._get_valor_estado(mano_dividida, carta_dealer, prob_dist)
         return ev_mano * 2
 
@@ -180,8 +202,13 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
         if mano.es_blackjack or mano.valor_total > 21:
             return Accion.PLANTARSE
 
+        self.memo_valor_estado.clear()
+        self.memo_outcome_prob.clear()
+        self.memo_dealer_dist.clear()
+        
         prob_dist = self.prob_dist_actual
         
+        # 1. Calcular los EV puros basados en el modelo de Markov
         acciones_ev = {}
         acciones_ev[Accion.PLANTARSE] = self._calcular_ev_plantarse(mano.valor_total, carta_dealer, prob_dist)
         acciones_ev[Accion.PEDIR] = self._calcular_ev_pedir(mano, carta_dealer, prob_dist)
@@ -190,7 +217,35 @@ class AgenteMarkov_prob_estable_por_umbral(Agente):
             acciones_ev[Accion.DOBLAR] = self._calcular_ev_doblar(mano, carta_dealer, prob_dist)
             if mano.cartas[0].valor == mano.cartas[1].valor:
                 acciones_ev[Accion.DIVIDIR] = self._calcular_ev_dividir(mano, carta_dealer, prob_dist)
-                
+        
+        # ================================================================= #
+        # === NUEVO: Aplicar el factor de riesgo basado en Hi-Lo === #
+        # ================================================================= #
+        
+        # 2. Calcular el Conteo Verdadero
+        mazos_restantes = np.sum(self.cartas_restantes) / 52.0
+        if mazos_restantes < 0.5: # Si queda menos de medio mazo, la volatilidad es muy alta
+            mazos_restantes = 0.5
+        
+        conteo_verdadero = self.conteo_hilo / mazos_restantes
+
+        # 3. Aplicar el "empujón" del Hi-Lo si el conteo es significativo
+        if conteo_verdadero >= 1 or conteo_verdadero <= -1:
+            ajuste = conteo_verdadero * self.factor_riesgo_escala
+            
+            # Conteo alto (+) aumenta el valor de jugadas agresivas/de espera
+            # y penaliza pedir (más riesgo de pasarse).
+            # Conteo bajo (-) tiene el efecto contrario.
+            if Accion.PLANTARSE in acciones_ev:
+                acciones_ev[Accion.PLANTARSE] += ajuste
+            if Accion.DOBLAR in acciones_ev:
+                acciones_ev[Accion.DOBLAR] += ajuste * 1.5 # Doblar es aún más sensible al conteo
+            if Accion.DIVIDIR in acciones_ev:
+                acciones_ev[Accion.DIVIDIR] += ajuste * 1.5 # Dividir también
+            if Accion.PEDIR in acciones_ev:
+                acciones_ev[Accion.PEDIR] -= ajuste # Pedir es más arriesgado con conteo alto
+
+        # 4. Tomar la decisión final con los EV ajustados
         mejor_ev = max(acciones_ev.values())
         
         valor_rendirse = self.recompensas['derrota'] / 2.0

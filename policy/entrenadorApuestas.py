@@ -8,7 +8,7 @@ import pandas as pd
 from agents.markovPoliticaApuestas import AgenteMarkov_PoliticaApuestas
 from core.casino import Casino
 from core.player import Jugador
-from guardar_datos import guardar_historial_csv  # Importa la función para guardar CSV
+from guardar_datos import guardar_historial_csv
 
 
 class EntrenadorApuestas:
@@ -44,7 +44,21 @@ class EntrenadorApuestas:
         print(f" Iniciando entrenamiento ({self.num_episodios} episodios)")
         for episodio in tqdm(range(self.num_episodios), desc="Entrenando política de apuestas"):
             self._resetear_episodio()
-            self.casino.jugar_partida(self.rondas_por_episodio)
+
+            #rondas individuales reales
+            for _ in range(self.rondas_por_episodio):
+                capital_antes = self.jugador.capital
+                self.casino._jugar_ronda()  # Ejecuta una ronda real
+                capital_despues = self.jugador.capital
+
+                # Detecta resultado
+                if capital_despues > capital_antes:
+                    self.agente.registrar_resultado("ganadas")
+                elif capital_despues < capital_antes:
+                    self.agente.registrar_resultado("perdidas")
+                else:
+                    self.agente.registrar_resultado("empatadas")
+
             self.agente.pg_apuestas.entrenar()
             self._registrar_metricas(episodio)
 
@@ -79,7 +93,7 @@ class EntrenadorApuestas:
         """Guarda el progreso del entrenamiento en un archivo CSV usando pandas"""
         filename = f"entrenamiento_apuestas_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
         guardar_historial_csv(self.historial, filename)
-        print(f"\n💾 Resultados del entrenamiento guardados en '{filename}'")
+        print(f"\nResultados del entrenamiento guardados en '{filename}'")
 
 
 
@@ -96,7 +110,7 @@ class EntrenadorApuestas:
 
         # Guardar pesos usando el método de la política
         self.agente.pg_apuestas.guardar_pesos(pesos_file)
-        print(f"📦 Pesos guardados en: {pesos_file}")
+        print(f"Pesos guardados en: {pesos_file}")
 
     def evaluar_agente(self, rondas=5, nombre="evaluacion"):
         """Ejecuta una simulación completa sin entrenamiento"""
@@ -105,7 +119,7 @@ class EntrenadorApuestas:
         self.casino.jugar_partida(rondas)
         capital_final = self.jugador.capital
         roi = (capital_final - self.capital_inicial) / self.capital_inicial * 100
-        print(f"🧪 Evaluación {nombre}: Capital final = ${capital_final:,.2f} (ROI: {roi:.2f}%)")
+        print(f" Evaluación {nombre}: Capital final = ${capital_final:,.2f} (ROI: {roi:.2f}%)")
 
     def _mostrar_resumen(self):
         """Muestra un resumen estadístico del entrenamiento"""

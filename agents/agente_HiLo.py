@@ -63,7 +63,6 @@ class AgenteHiLo(Agente, ABC):
         # Clampeo entre min_bet y max_bet
         bet = max(self.min_bet, min(bet, max_bet))
 
-
         return bet
     
     

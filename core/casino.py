@@ -296,6 +296,17 @@ class Casino:
                     ganancia = -mano.apuesta
                     self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
 
+                #Apuestas
+                if hasattr(agente, "pg_apuestas"):
+                    try:
+                        estado = agente.pg_apuestas.obtener_estado()
+                        porcentaje = mano.apuesta / (agente.pg_apuestas.capital_actual + 1e-8)
+                        resultado = ganancia / (mano.apuesta + 1e-8)
+                        agente.pg_apuestas.guardar_experiencia(estado, porcentaje, resultado)
+                    except Exception as e:
+                        print(f"⚠️ Error guardando experiencia: {e}")
+                #Apuestas
+
                 if self.data_collector is not None:
                     self.data_collector.registrar_resultado(mano=mano, ganancia=ganancia)
         self.logger.info("*** Fin de Fase de Pagos. ***\n")

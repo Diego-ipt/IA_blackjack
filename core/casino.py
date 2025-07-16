@@ -37,6 +37,12 @@ class Casino:
         for agente in self.agentes:
             if hasattr(agente, 'resetear_conteo'):
                 agente.resetear_conteo()
+                # Registramos en el logger del Casino
+                self.logger.info(
+                    "Conteo de cartas de '%s' reseteado a %d",
+                    agente.jugador.nombre,
+                    getattr(agente, 'conteo', None)
+                )
 
     def _jugar_ronda(self):
         self.logger.info("------ INICIO DE RONDA ------")
@@ -295,4 +301,6 @@ class Casino:
             self._jugar_ronda()
             for agente in self.agentes:
                 print(f"'{agente.jugador.nombre}': Capital = {agente.jugador.capital}")
+        if self.data_collector is not None:
+            self.data_collector.close()
         print("Partida terminada")

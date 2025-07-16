@@ -34,7 +34,8 @@ class DataCollector:
             "agente_capital_inicial": agente.jugador.capital + mano.apuesta,
             "dealer_valor_carta": carta_dealer.valor,
             "accion_tomada": accion.name,
-            "ganancia_neta": None # Se llena despues
+            "ganancia_neta": None, # Se llena despues
+            "conteo_cartas": getattr(agente, "conteo", pd.NA)
         }
 
         self.registros.append(registro)
@@ -77,15 +78,18 @@ class DataCollector:
                 lambda row: row['ganancia_neta'] / row['mano_apuesta'] if row['mano_apuesta'] > 0 else 0,
                 axis=1
             )
+            
+        df["conteo_cartas"] = df["conteo_cartas"].astype("Int64")
 
         # Escribimos el DataFrame al archivo CSV
         # Usamos mode='a' para agregar al final del archivo
         # y header=not self._header_written para escribir el encabezado solo una vez
         df.to_csv(
             self.filepath,
-            mode='a',
+            mode="a",
             header=not self._header_written,
-            index=False
+            index=False,
+            na_rep="None"
         )
         self._header_written = True
         self.registros = []

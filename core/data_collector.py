@@ -7,7 +7,7 @@ from .acciones import Accion
 from agents.agente_base import Agente
 
 class DataCollector:
-    def __init__(self, filepath: str, chunk_size: int = 10000):
+    def __init__(self, filepath: str, chunk_size: int = 10000, guardar_en_archivo: bool = True):
         """
         Inicializa recolector de datos para escribir por lotes(chunks) en un archivo CSV.
         :param filepath: Ruta del archivo CSV donde se guardarán los datos.
@@ -17,6 +17,7 @@ class DataCollector:
         self.filepath = filepath
         self.chunk_size = chunk_size
         self._header_written = False
+        self.guardar_en_archivo = guardar_en_archivo
 
         os.makedirs(os.path.dirname(self.filepath), exist_ok=True)
 
@@ -52,6 +53,8 @@ class DataCollector:
             self._flush_to_disk()
 
     def _flush_to_disk(self):
+        if not self.guardar_en_archivo:
+            return
         """
         Escribe los registros acumulados en el archivo CSV y limpia la lista de registros.
         """

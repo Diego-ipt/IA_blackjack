@@ -44,6 +44,20 @@ class Casino:
                     getattr(agente, 'conteo', None)
                 )
 
+    def _repartir_carta_segura(self) -> Carta:
+        """
+        Intenta repartir una carta. Si el mazo está vacío, lo baraja,
+        notifica a los agentes y luego reparte.
+        """
+        try:
+            return self.mazo.repartir()
+        except IndexError:
+            self.logger.warning("Mazo vacío a mitad de ronda. Barajando de emergencia...")
+            self.mazo = Mazo(num_mazos=self.num_mazos, zapato=self.zapato)
+            self.logger.info("Mazo barajado - Reseteando conteos de agentes.")
+            self._resetear_conteo_agentes()
+            return self.mazo.repartir()
+
     def _jugar_ronda(self):
         self.logger.info("------ INICIO DE RONDA ------")
         #1. Fase de Preparacion
@@ -85,25 +99,25 @@ class Casino:
 
         # Repartir primera carta a todos
         for agente in agentes_activos:
-            carta = self.mazo.repartir()
+            carta = self._repartir_carta_segura()
             agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
             self.logger.info(f"Manos repartidas: '{agente.jugador.nombre}' tiene {agente.jugador.manos[0]}.")
             self._notificar_observadores(carta)
 
-        carta_visible_dealer = self.mazo.repartir()
+        carta_visible_dealer = self._repartir_carta_segura()
         self.dealer.pedir_carta(self.dealer.manos[0], carta_visible_dealer)
         self.logger.info(f"Dealer muestra: {self.dealer.manos[0]}.")
         self._notificar_observadores(carta_visible_dealer)
 
         # Repartir segunda carta a todos
         for agente in agentes_activos:
-            carta = self.mazo.repartir()
+            carta = self._repartir_carta_segura()
             agente.jugador.pedir_carta(agente.jugador.manos[0], carta)
             self.logger.info(f"Manos repartidas: '{agente.jugador.nombre}' tiene {agente.jugador.manos[0]}.")
             self._notificar_observadores(carta)
 
         # Repartimos la carta al dealer que no se muestra
-        self.carta_oculta_dealer = self.mazo.repartir()
+        self.carta_oculta_dealer = self._repartir_carta_segura()
         self.logger.info(f"Dealer recibe carta oculta.")
         self.logger.info("*** Fin de Fase de Reparto. ***\n")
 
@@ -135,7 +149,7 @@ class Casino:
                         mano_actual.turno_terminado = True
 
                     elif accion == Accion.PEDIR:
-                        carta_nueva = self.mazo.repartir()
+                        carta_nueva = self._repartir_carta_segura()
                         agente.jugador.pedir_carta(mano_actual, carta_nueva)
                         self.logger.info(f"   '{agente.jugador.nombre}' pide y recibe {carta_nueva}. Nueva mano: {mano_actual}.")
                         self._notificar_observadores(carta_nueva)
@@ -148,7 +162,7 @@ class Casino:
                             apuesta_vieja = mano_actual.apuesta
                             if agente.jugador.doblar_apuesta(mano_actual):
                                 # Si se pudo, repartir y terminar turno
-                                carta_nueva = self.mazo.repartir()
+                                carta_nueva = self._repartir_carta_segura()
                                 agente.jugador.pedir_carta(mano_actual, carta_nueva)
                                 self.logger.info(f"   '{agente.jugador.nombre}' dobla y recibe {carta_nueva}. Su apuesta sube de ${apuesta_vieja} a ${mano_actual.apuesta} Nueva mano: {mano_actual}.")
                                 self._notificar_observadores(carta_nueva)
@@ -170,14 +184,14 @@ class Casino:
                                 # Si fue exitoso, repartir una carta nueva a cada mano
 
                                 # Carta mano original
-                                carta1 = self.mazo.repartir()
+                                carta1 = self._repartir_carta_segura()
                                 agente.jugador.pedir_carta(mano_actual, carta1)
                                 self.logger.info(f"   '{agente.jugador.nombre}' divide y recibe {carta1} en mano original. Mano: {mano_actual}.")
                                 self._notificar_observadores(carta1)
 
                                 # Carta mano nueva (ultima en la lista)
                                 mano_nueva = agente.jugador.manos[-1]
-                                carta2 = self.mazo.repartir()
+                                carta2 = self._repartir_carta_segura()
                                 agente.jugador.pedir_carta(mano_nueva, carta2)
                                 self.logger.info(f"   '{agente.jugador.nombre}' recibe {carta2} en mano nueva. Mano: {mano_nueva}.")
                                 self._notificar_observadores(carta2)
@@ -219,7 +233,7 @@ class Casino:
         # El dealer pide mientras tenga menos que 17
         # Se planta con un 17 blando (A,6), valor_total maneja esto
         while self.dealer.manos[0].valor_total < 17:
-            carta_nueva_dealer = self.mazo.repartir()
+            carta_nueva_dealer = self._repartir_carta_segura()
             self.dealer.pedir_carta(self.dealer.manos[0], carta_nueva_dealer)
             self.logger.info(f"Dealer pide y recibe {carta_nueva_dealer}. Nueva mano: {self.dealer.manos[0]}.")
             self._notificar_observadores(carta_nueva_dealer)

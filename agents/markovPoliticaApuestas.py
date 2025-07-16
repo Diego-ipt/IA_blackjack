@@ -81,7 +81,7 @@ class AgenteMarkov_PoliticaApuestas(Agente):
         self.memo_outcome_prob.clear()
         self.memo_dealer_dist.clear()
 
-        # Reset Policy Gradient
+        # Reset policy Gradient
         self.pg_apuestas.capital_actual = self.jugador.capital
 
         if reset_completo:

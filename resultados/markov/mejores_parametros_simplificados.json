@@ -1,0 +1,2765 @@
+{
+    "ultimo_checkpoint": {
+        "episodio": 5000,
+        "mejor_recompensa": -432.0,
+        "parametros_optimos": {
+            "recompensa_victoria": 0.49809807538986206,
+            "recompensa_empate": 0.0,
+            "recompensa_derrota": -0.38012391328811646,
+            "factor_riesgo_escala": 0.0
+        },
+        "timestamp": "20250716_124548"
+    },
+    "historial_completo": [
+        {
+            "episodio": 20,
+            "mejor_recompensa": -804.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 1.7277793884277344,
+                "recompensa_empate": -0.17792700231075287,
+                "recompensa_derrota": -1.7464566230773926,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_033204"
+        },
+        {
+            "episodio": 40,
+            "mejor_recompensa": -804.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 1.7277793884277344,
+                "recompensa_empate": -0.17792700231075287,
+                "recompensa_derrota": -1.7464566230773926,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_033414"
+        },
+        {
+            "episodio": 60,
+            "mejor_recompensa": -804.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 1.7277793884277344,
+                "recompensa_empate": -0.17792700231075287,
+                "recompensa_derrota": -1.7464566230773926,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_033628"
+        },
+        {
+            "episodio": 80,
+            "mejor_recompensa": -804.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 1.7277793884277344,
+                "recompensa_empate": -0.17792700231075287,
+                "recompensa_derrota": -1.7464566230773926,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_033844"
+        },
+        {
+            "episodio": 100,
+            "mejor_recompensa": -804.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 1.7277793884277344,
+                "recompensa_empate": -0.17792700231075287,
+                "recompensa_derrota": -1.7464566230773926,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_034059"
+        },
+        {
+            "episodio": 120,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_034306"
+        },
+        {
+            "episodio": 140,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_034522"
+        },
+        {
+            "episodio": 160,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_034738"
+        },
+        {
+            "episodio": 180,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_034950"
+        },
+        {
+            "episodio": 200,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_035203"
+        },
+        {
+            "episodio": 220,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_035419"
+        },
+        {
+            "episodio": 240,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_035634"
+        },
+        {
+            "episodio": 260,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_035846"
+        },
+        {
+            "episodio": 280,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_040106"
+        },
+        {
+            "episodio": 300,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_040320"
+        },
+        {
+            "episodio": 320,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_040534"
+        },
+        {
+            "episodio": 340,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_040744"
+        },
+        {
+            "episodio": 360,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_040953"
+        },
+        {
+            "episodio": 380,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_041204"
+        },
+        {
+            "episodio": 400,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_041418"
+        },
+        {
+            "episodio": 420,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_041634"
+        },
+        {
+            "episodio": 440,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_041849"
+        },
+        {
+            "episodio": 460,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_042104"
+        },
+        {
+            "episodio": 480,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_042319"
+        },
+        {
+            "episodio": 500,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_042530"
+        },
+        {
+            "episodio": 520,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_042741"
+        },
+        {
+            "episodio": 540,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_042954"
+        },
+        {
+            "episodio": 560,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_043215"
+        },
+        {
+            "episodio": 580,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_043431"
+        },
+        {
+            "episodio": 600,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_043642"
+        },
+        {
+            "episodio": 620,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_043858"
+        },
+        {
+            "episodio": 640,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_044115"
+        },
+        {
+            "episodio": 660,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_044329"
+        },
+        {
+            "episodio": 680,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_044543"
+        },
+        {
+            "episodio": 700,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_044756"
+        },
+        {
+            "episodio": 720,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_045011"
+        },
+        {
+            "episodio": 740,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_045220"
+        },
+        {
+            "episodio": 760,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_045432"
+        },
+        {
+            "episodio": 780,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_045650"
+        },
+        {
+            "episodio": 800,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_045906"
+        },
+        {
+            "episodio": 820,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_050120"
+        },
+        {
+            "episodio": 840,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_050336"
+        },
+        {
+            "episodio": 860,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_050550"
+        },
+        {
+            "episodio": 880,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_050802"
+        },
+        {
+            "episodio": 900,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_051017"
+        },
+        {
+            "episodio": 920,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_051225"
+        },
+        {
+            "episodio": 940,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_051437"
+        },
+        {
+            "episodio": 960,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_051659"
+        },
+        {
+            "episodio": 980,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_051916"
+        },
+        {
+            "episodio": 1000,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_052128"
+        },
+        {
+            "episodio": 1020,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_052340"
+        },
+        {
+            "episodio": 1040,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_052553"
+        },
+        {
+            "episodio": 1060,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_052808"
+        },
+        {
+            "episodio": 1080,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_053025"
+        },
+        {
+            "episodio": 1100,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_053235"
+        },
+        {
+            "episodio": 1120,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_053455"
+        },
+        {
+            "episodio": 1140,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_053710"
+        },
+        {
+            "episodio": 1160,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_053926"
+        },
+        {
+            "episodio": 1180,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_054136"
+        },
+        {
+            "episodio": 1200,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_054344"
+        },
+        {
+            "episodio": 1220,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_054602"
+        },
+        {
+            "episodio": 1240,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_054816"
+        },
+        {
+            "episodio": 1260,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_055032"
+        },
+        {
+            "episodio": 1280,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_055246"
+        },
+        {
+            "episodio": 1300,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_055502"
+        },
+        {
+            "episodio": 1320,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_055716"
+        },
+        {
+            "episodio": 1340,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_055930"
+        },
+        {
+            "episodio": 1360,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_060144"
+        },
+        {
+            "episodio": 1380,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_060358"
+        },
+        {
+            "episodio": 1400,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_060614"
+        },
+        {
+            "episodio": 1420,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_060827"
+        },
+        {
+            "episodio": 1440,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_061046"
+        },
+        {
+            "episodio": 1460,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_061259"
+        },
+        {
+            "episodio": 1480,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_061514"
+        },
+        {
+            "episodio": 1500,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_061727"
+        },
+        {
+            "episodio": 1520,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_061938"
+        },
+        {
+            "episodio": 1540,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_062157"
+        },
+        {
+            "episodio": 1560,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_062414"
+        },
+        {
+            "episodio": 1580,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_062628"
+        },
+        {
+            "episodio": 1600,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_062844"
+        },
+        {
+            "episodio": 1620,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_063100"
+        },
+        {
+            "episodio": 1640,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_063313"
+        },
+        {
+            "episodio": 1660,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_063526"
+        },
+        {
+            "episodio": 1680,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_063741"
+        },
+        {
+            "episodio": 1700,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_063957"
+        },
+        {
+            "episodio": 1720,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_064211"
+        },
+        {
+            "episodio": 1740,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_064423"
+        },
+        {
+            "episodio": 1760,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_064634"
+        },
+        {
+            "episodio": 1780,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_064856"
+        },
+        {
+            "episodio": 1800,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_065122"
+        },
+        {
+            "episodio": 1820,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_065336"
+        },
+        {
+            "episodio": 1840,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_065549"
+        },
+        {
+            "episodio": 1860,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_065803"
+        },
+        {
+            "episodio": 1880,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_070014"
+        },
+        {
+            "episodio": 1900,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_070225"
+        },
+        {
+            "episodio": 1920,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_070439"
+        },
+        {
+            "episodio": 1940,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_070653"
+        },
+        {
+            "episodio": 1960,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_070909"
+        },
+        {
+            "episodio": 1980,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_071122"
+        },
+        {
+            "episodio": 2000,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_071333"
+        },
+        {
+            "episodio": 2020,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_071544"
+        },
+        {
+            "episodio": 2040,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_071801"
+        },
+        {
+            "episodio": 2060,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_072014"
+        },
+        {
+            "episodio": 2080,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_072229"
+        },
+        {
+            "episodio": 2100,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_072440"
+        },
+        {
+            "episodio": 2120,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_072654"
+        },
+        {
+            "episodio": 2140,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_072904"
+        },
+        {
+            "episodio": 2160,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_073117"
+        },
+        {
+            "episodio": 2180,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_073326"
+        },
+        {
+            "episodio": 2200,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_073538"
+        },
+        {
+            "episodio": 2220,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_073754"
+        },
+        {
+            "episodio": 2240,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_074015"
+        },
+        {
+            "episodio": 2260,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_074228"
+        },
+        {
+            "episodio": 2280,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_074443"
+        },
+        {
+            "episodio": 2300,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_074654"
+        },
+        {
+            "episodio": 2320,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_074909"
+        },
+        {
+            "episodio": 2340,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_075123"
+        },
+        {
+            "episodio": 2360,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_075336"
+        },
+        {
+            "episodio": 2380,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_075548"
+        },
+        {
+            "episodio": 2400,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_075759"
+        },
+        {
+            "episodio": 2420,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_080015"
+        },
+        {
+            "episodio": 2440,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_080226"
+        },
+        {
+            "episodio": 2460,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_080439"
+        },
+        {
+            "episodio": 2480,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_080651"
+        },
+        {
+            "episodio": 2500,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_080905"
+        },
+        {
+            "episodio": 2520,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_081112"
+        },
+        {
+            "episodio": 2540,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_081324"
+        },
+        {
+            "episodio": 2560,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_081536"
+        },
+        {
+            "episodio": 2580,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_081747"
+        },
+        {
+            "episodio": 2600,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_082005"
+        },
+        {
+            "episodio": 2620,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_082216"
+        },
+        {
+            "episodio": 2640,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_082429"
+        },
+        {
+            "episodio": 2660,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_082643"
+        },
+        {
+            "episodio": 2680,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_082853"
+        },
+        {
+            "episodio": 2700,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_083108"
+        },
+        {
+            "episodio": 2720,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_083318"
+        },
+        {
+            "episodio": 2740,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_083533"
+        },
+        {
+            "episodio": 2760,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_083752"
+        },
+        {
+            "episodio": 2780,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_084007"
+        },
+        {
+            "episodio": 2800,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_084216"
+        },
+        {
+            "episodio": 2820,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_084427"
+        },
+        {
+            "episodio": 2840,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_084640"
+        },
+        {
+            "episodio": 2860,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_084851"
+        },
+        {
+            "episodio": 2880,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_085105"
+        },
+        {
+            "episodio": 2900,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_085317"
+        },
+        {
+            "episodio": 2920,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_085527"
+        },
+        {
+            "episodio": 2940,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_085743"
+        },
+        {
+            "episodio": 2960,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_085958"
+        },
+        {
+            "episodio": 2980,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_090215"
+        },
+        {
+            "episodio": 3000,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_090424"
+        },
+        {
+            "episodio": 3020,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_090638"
+        },
+        {
+            "episodio": 3040,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_090844"
+        },
+        {
+            "episodio": 3060,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_091055"
+        },
+        {
+            "episodio": 3080,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_091305"
+        },
+        {
+            "episodio": 3100,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_091512"
+        },
+        {
+            "episodio": 3120,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_091727"
+        },
+        {
+            "episodio": 3140,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_091940"
+        },
+        {
+            "episodio": 3160,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_092154"
+        },
+        {
+            "episodio": 3180,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_092407"
+        },
+        {
+            "episodio": 3200,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_092616"
+        },
+        {
+            "episodio": 3220,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_092828"
+        },
+        {
+            "episodio": 3240,
+            "mejor_recompensa": -578.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.6971157193183899,
+                "recompensa_empate": -0.045930441468954086,
+                "recompensa_derrota": -0.5543180704116821,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_093041"
+        },
+        {
+            "episodio": 3260,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_093255"
+        },
+        {
+            "episodio": 3280,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_093507"
+        },
+        {
+            "episodio": 3300,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_093720"
+        },
+        {
+            "episodio": 3320,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_093930"
+        },
+        {
+            "episodio": 3340,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_094146"
+        },
+        {
+            "episodio": 3360,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_094402"
+        },
+        {
+            "episodio": 3380,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_094618"
+        },
+        {
+            "episodio": 3400,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_094830"
+        },
+        {
+            "episodio": 3420,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_095040"
+        },
+        {
+            "episodio": 3440,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_095252"
+        },
+        {
+            "episodio": 3460,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_095505"
+        },
+        {
+            "episodio": 3480,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_095718"
+        },
+        {
+            "episodio": 3500,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_095926"
+        },
+        {
+            "episodio": 3520,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_100138"
+        },
+        {
+            "episodio": 3540,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_100351"
+        },
+        {
+            "episodio": 3560,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_100603"
+        },
+        {
+            "episodio": 3580,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_100816"
+        },
+        {
+            "episodio": 3600,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_101035"
+        },
+        {
+            "episodio": 3620,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_101253"
+        },
+        {
+            "episodio": 3640,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_101511"
+        },
+        {
+            "episodio": 3660,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_101730"
+        },
+        {
+            "episodio": 3680,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_101944"
+        },
+        {
+            "episodio": 3700,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_102200"
+        },
+        {
+            "episodio": 3720,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_102418"
+        },
+        {
+            "episodio": 3740,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_102630"
+        },
+        {
+            "episodio": 3760,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_102838"
+        },
+        {
+            "episodio": 3780,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_103045"
+        },
+        {
+            "episodio": 3800,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_103259"
+        },
+        {
+            "episodio": 3820,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_103504"
+        },
+        {
+            "episodio": 3840,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_103722"
+        },
+        {
+            "episodio": 3860,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_103942"
+        },
+        {
+            "episodio": 3880,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_104154"
+        },
+        {
+            "episodio": 3900,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_104401"
+        },
+        {
+            "episodio": 3920,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_104610"
+        },
+        {
+            "episodio": 3940,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_104826"
+        },
+        {
+            "episodio": 3960,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_105032"
+        },
+        {
+            "episodio": 3980,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_105248"
+        },
+        {
+            "episodio": 4000,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_105507"
+        },
+        {
+            "episodio": 4020,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_105719"
+        },
+        {
+            "episodio": 4040,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_105929"
+        },
+        {
+            "episodio": 4060,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_110145"
+        },
+        {
+            "episodio": 4080,
+            "mejor_recompensa": -532.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 2.1766111850738525,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -1.3126667737960815,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_110404"
+        },
+        {
+            "episodio": 4100,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_110617"
+        },
+        {
+            "episodio": 4120,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_110833"
+        },
+        {
+            "episodio": 4140,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_111047"
+        },
+        {
+            "episodio": 4160,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_111300"
+        },
+        {
+            "episodio": 4180,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_111515"
+        },
+        {
+            "episodio": 4200,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_111732"
+        },
+        {
+            "episodio": 4220,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_111945"
+        },
+        {
+            "episodio": 4240,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_112158"
+        },
+        {
+            "episodio": 4260,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_112413"
+        },
+        {
+            "episodio": 4280,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_112625"
+        },
+        {
+            "episodio": 4300,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_112836"
+        },
+        {
+            "episodio": 4320,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_113055"
+        },
+        {
+            "episodio": 4340,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_113303"
+        },
+        {
+            "episodio": 4360,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_113514"
+        },
+        {
+            "episodio": 4380,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_113722"
+        },
+        {
+            "episodio": 4400,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_113935"
+        },
+        {
+            "episodio": 4420,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_114146"
+        },
+        {
+            "episodio": 4440,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_114356"
+        },
+        {
+            "episodio": 4460,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_114609"
+        },
+        {
+            "episodio": 4480,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_114823"
+        },
+        {
+            "episodio": 4500,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_115035"
+        },
+        {
+            "episodio": 4520,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_115245"
+        },
+        {
+            "episodio": 4540,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_115455"
+        },
+        {
+            "episodio": 4560,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_115708"
+        },
+        {
+            "episodio": 4580,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_115921"
+        },
+        {
+            "episodio": 4600,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_120134"
+        },
+        {
+            "episodio": 4620,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_120348"
+        },
+        {
+            "episodio": 4640,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_120604"
+        },
+        {
+            "episodio": 4660,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_120816"
+        },
+        {
+            "episodio": 4680,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_121026"
+        },
+        {
+            "episodio": 4700,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_121237"
+        },
+        {
+            "episodio": 4720,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_121446"
+        },
+        {
+            "episodio": 4740,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_121658"
+        },
+        {
+            "episodio": 4760,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_121911"
+        },
+        {
+            "episodio": 4780,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_122127"
+        },
+        {
+            "episodio": 4800,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_122341"
+        },
+        {
+            "episodio": 4820,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_122554"
+        },
+        {
+            "episodio": 4840,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_122808"
+        },
+        {
+            "episodio": 4860,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_123021"
+        },
+        {
+            "episodio": 4880,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_123235"
+        },
+        {
+            "episodio": 4900,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_123445"
+        },
+        {
+            "episodio": 4920,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_123700"
+        },
+        {
+            "episodio": 4940,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_123909"
+        },
+        {
+            "episodio": 4960,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_124122"
+        },
+        {
+            "episodio": 4980,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_124334"
+        },
+        {
+            "episodio": 5000,
+            "mejor_recompensa": -432.0,
+            "parametros_optimos": {
+                "recompensa_victoria": 0.49809807538986206,
+                "recompensa_empate": 0.0,
+                "recompensa_derrota": -0.38012391328811646,
+                "factor_riesgo_escala": 0.0
+            },
+            "timestamp": "20250716_124548"
+        }
+    ]
+}

@@ -11,8 +11,8 @@ from agents.markov_h import AgenteHibrido_Markov_HiLo
 from agents.agente_HiLo import AgenteHiLo
 
 # ========== CONFIGURACIÓN ==========
-NUM_RONDAS = 100
-DINERO_INICIAL = 400
+NUM_RONDAS = 5000
+DINERO_INICIAL = 40000
 
 
 
@@ -30,23 +30,23 @@ def test_agente_markov_vs_aleatorios():
     agente_markov_umbral = AgenteMarkov_prob_estable_por_umbral(jugador_markov_umbral, num_mazos=4)
     
     recompensas = {
-    'victoria': 1.0,  
-    'derrota': -1.0,
-    'empate': -0.25   
+        'victoria': 0.49809807538986206,  
+        'derrota': -0.38012391328811646,
+        'empate': 0.0  
     }
     agente_markov_umbral.set_recompensas(recompensas)
 
     # Agente híbrido con recompensas más agresivas
     jugador_markov_hibrido = Jugador("Markov_Hibrido", DINERO_INICIAL)
     agente_markov_hibrido = AgenteHibrido_Markov_HiLo(jugador_markov_hibrido, num_mazos=4)
-    
+
     recompensas_hibrido = {
-        'victoria': 1.0,  
-        'derrota': -1.0,
+        'victoria': 0.49809807538986206,  
+        'derrota': -0.38012391328811646,
         'empate': 0.0    
     }
     agente_markov_hibrido.set_recompensas(recompensas_hibrido)
-    agente_markov_hibrido.set_factor_riesgo(0.2)
+    agente_markov_hibrido.set_factor_riesgo(0.125)
 
     # Agente Hi-Lo
     jugador_hilo = Jugador("HiLo", DINERO_INICIAL)

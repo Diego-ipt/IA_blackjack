@@ -45,6 +45,13 @@ class Mano:
         """
         return len(self.cartas) == 2 and self.valor_total == 21
 
+    @property
+    def es_divisible(self):
+        """
+        Indica si la mano es divisible (tiene dos cartas del mismo valor).
+        """
+        return len(self.cartas) == 2 and self.cartas[0].valor == self.cartas[1].valor
+
     def agregar_carta(self, carta: Carta):
         """
         Agrega una carta a la mano
@@ -118,10 +125,7 @@ class Jugador:
         :param mano: Mano a dividir
         :return: True si se ha realizado el split, False en caso contrario.
         """
-        if len(mano.cartas) != 2 or self.capital < mano.apuesta:
-            return False
-
-        if mano.cartas[0].valor != mano.cartas[1].valor:
+        if not mano.es_divisible:
             return False
 
         self.capital -= mano.apuesta

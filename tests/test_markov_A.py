@@ -9,9 +9,10 @@ from agents.markov_RL import AgenteMarkov_RL
 from agents.agente_A_5 import AgenteAleatorio_5
 
 # ========== CONFIGURACIÓN ==========
-NUM_RONDAS = 10000
-DINERO_INICIAL = 100000
-# ===================================
+NUM_RONDAS = 1000
+DINERO_INICIAL = 4000
+
+
 
 def test_agente_markov_vs_aleatorios():
     print(f"Iniciando test de agentes Markov con {NUM_RONDAS} rondas...")
@@ -39,16 +40,17 @@ def test_agente_markov_vs_aleatorios():
     
     fieldnames = [
         'round', 'cards_remaining', 
-        'normal_decision_time_ms', 'normal_decisions', 'normal_result',
-        'arriesgado_decision_time_ms', 'arriesgado_decisions', 'arriesgado_result'
-    ]
+        'normal_decision_time_ms', 'normal_decisions', 'normal_result', 'normal_capital_change',
+        'arriesgado_decision_time_ms', 'arriesgado_decisions', 'arriesgado_result', 'arriesgado_capital_change']
     csv_data = []
     
-    # Contadores para ambos agentes
+    print("NOTA: Todos los agentes Markov apuestan $5 por ronda")
+    
+    # Contadores para todos los agentes Markov
     normal_wins = normal_losses = normal_ties = 0
     arriesgado_wins = arriesgado_losses = arriesgado_ties = 0
 
-    # Timing para ambos agentes
+    # Timing para todos los agentes Markov
     normal_decision_times = []
     arriesgado_decision_times = []
 
@@ -103,7 +105,6 @@ def test_agente_markov_vs_aleatorios():
         
         normal_capital_change = normal_final_capital - normal_start_capital
         arriesgado_capital_change = arriesgado_final_capital - arriesgado_start_capital
-
         # Calcular resultados para agente normal
         if normal_capital_change > 0:
             normal_result = 1
@@ -132,16 +133,18 @@ def test_agente_markov_vs_aleatorios():
             'normal_decision_time_ms': int(sum(normal_decision_times) * 1000) if normal_decision_times else 0,
             'normal_decisions': len(normal_decision_times),
             'normal_result': normal_result,
+            'normal_capital_change': normal_capital_change,
             'arriesgado_decision_time_ms': int(sum(arriesgado_decision_times) * 1000) if arriesgado_decision_times else 0,
             'arriesgado_decisions': len(arriesgado_decision_times),
-            'arriesgado_result': arriesgado_result
+            'arriesgado_result': arriesgado_result,
+            'arriesgado_capital_change': arriesgado_capital_change
         }
         csv_data.append(round_data)
         
         if round_number % 100 == 0:
             print(f"Ronda {round_number} completada.")
-            print(f"  Normal: Capital={normal_final_capital}")
-            print(f"  Arriesgado: Capital={arriesgado_final_capital}")
+            print(f"  Normal: Capital={normal_final_capital} (Δ{normal_capital_change:+d})")
+            print(f"  Arriesgado: Capital={arriesgado_final_capital} (Δ{arriesgado_capital_change:+d})")
 
     def tracked_jugar_partida(num_rondas: int):
         """Versión modificada que termina cuando no hay jugadores con dinero"""
@@ -192,7 +195,7 @@ def test_agente_markov_vs_aleatorios():
         except Exception as e2:
             print(f"Failed to save to alternative location: {e2}")
 
-    # Resultados finales para ambos agentes
+    # Resultados finales para todos los agentes Markov
     total_rounds = round_number
     if total_rounds > 0:
         print(f"\n" + "="*60)
@@ -208,18 +211,8 @@ def test_agente_markov_vs_aleatorios():
         print(f"  Victorias: {arriesgado_wins}/{total_rounds} ({arriesgado_wins/total_rounds*100:.2f}%)")
         print(f"  Derrotas: {arriesgado_losses}/{total_rounds} ({arriesgado_losses/total_rounds*100:.2f}%)")
         print(f"  Empates: {arriesgado_ties}/{total_rounds} ({arriesgado_ties/total_rounds*100:.2f}%)")
-        
-        print(f"\nComparación de rendimiento:")
-        normal_winrate = normal_wins / total_rounds if total_rounds > 0 else 0
-        arriesgado_winrate = arriesgado_wins / total_rounds if total_rounds > 0 else 0
-        
-        if normal_winrate > arriesgado_winrate:
-            print(f"  ✓ Markov Normal tiene mejor tasa de victoria (+{(normal_winrate - arriesgado_winrate)*100:.2f}%)")
-        elif arriesgado_winrate > normal_winrate:
-            print(f"  ✓ Markov Arriesgado tiene mejor tasa de victoria (+{(arriesgado_winrate - normal_winrate)*100:.2f}%)")
-        else:
-            print(f"  = Ambos agentes tienen la misma tasa de victoria")
 
+        
     for agente in agentes:
         assert agente.jugador.capital >= 0, f"Capital negativo para {agente.jugador.nombre}: {agente.jugador.capital}"
         print(f"Capital final {agente.jugador.nombre}: {agente.jugador.capital}")

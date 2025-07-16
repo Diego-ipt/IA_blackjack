@@ -1,0 +1,77 @@
+{
+    "ultimo_checkpoint": {
+        "episodio": 100,
+        "mejor_recompensa": -784.0,
+        "recompensas_optimas": {
+            "win_score": 0.9825708866119385,
+            "win_dealer_bust": 0.0,
+            "tie": -0.639582097530365,
+            "loss_score": -0.3765755593776703,
+            "player_bust": -1.2511482238769531
+        },
+        "timestamp": "20250715_201951"
+    },
+    "historial_completo": [
+        {
+            "episodio": 20,
+            "mejor_recompensa": -931.0,
+            "recompensas_optimas": {
+                "win_score": 1.329609751701355,
+                "win_dealer_bust": 0.6148053407669067,
+                "tie": -1.1969493627548218,
+                "loss_score": -0.3489205837249756,
+                "player_bust": -0.5375909805297852
+            },
+            "timestamp": "20250715_201436"
+        },
+        {
+            "episodio": 40,
+            "mejor_recompensa": -815.0,
+            "recompensas_optimas": {
+                "win_score": 0.0,
+                "win_dealer_bust": 1.1665979623794556,
+                "tie": 0.0,
+                "loss_score": -0.6076815128326416,
+                "player_bust": -0.5384715795516968
+            },
+            "timestamp": "20250715_201552"
+        },
+        {
+            "episodio": 60,
+            "mejor_recompensa": -784.0,
+            "recompensas_optimas": {
+                "win_score": 0.9825708866119385,
+                "win_dealer_bust": 0.0,
+                "tie": -0.639582097530365,
+                "loss_score": -0.3765755593776703,
+                "player_bust": -1.2511482238769531
+            },
+            "timestamp": "20250715_201712"
+        },
+        {
+            "episodio": 80,
+            "mejor_recompensa": -784.0,
+            "recompensas_optimas": {
+                "win_score": 0.9825708866119385,
+                "win_dealer_bust": 0.0,
+                "tie": -0.639582097530365,
+                "loss_score": -0.3765755593776703,
+                "player_bust": -1.2511482238769531
+            },
+            "timestamp": "20250715_201838"
+        },
+        {
+            "episodio": 100,
+            "mejor_recompensa": -784.0,
+            "recompensas_optimas": {
+                "win_score": 0.9825708866119385,
+                "win_dealer_bust": 0.0,
+                "tie": -0.639582097530365,
+                "loss_score": -0.3765755593776703,
+                "player_bust": -1.2511482238769531
+            },
+            "timestamp": "20250715_201951"
+        }
+    ],
+    "total_episodios_entrenados": 100
+}

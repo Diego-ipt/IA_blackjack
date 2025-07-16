@@ -20,7 +20,7 @@ class BlackjackRewardEnv(gym.Env):
     Un entorno de Gymnasium donde una 'acción' es elegir la estructura de recompensas
     y la 'recompensa' para el meta-agente es el rendimiento financiero del AgenteMarkov.
     """
-    def __init__(self, num_rondas_simulacion=1000, capital_inicial=10000):
+    def __init__(self, num_rondas_simulacion=1000, capital_inicial=5000):
         super(BlackjackRewardEnv, self).__init__()
         
         self.num_rondas_simulacion = num_rondas_simulacion
@@ -29,8 +29,8 @@ class BlackjackRewardEnv(gym.Env):
         # ESPACIO DE ACCIONES: Los 5 valores de recompensa que queremos aprender.
         # [R_win_score, R_win_dealer_bust, R_tie, R_loss_score, R_player_bust]
         # Límites generosos para permitir al agente explorar libremente.
-        low_bounds = np.array([-5.0, -5.0, -5.0, -5.0, -5.0], dtype=np.float32)
-        high_bounds = np.array([5.0, 5.0, 5.0, 0.0, 0.0], dtype=np.float32)
+        low_bounds = np.array([0, 0, -5.0, -5.0, -5.0], dtype=np.float32)
+        high_bounds = np.array([5.0, 5.0, 0, 0.0, 0.0], dtype=np.float32)
         self.action_space = gym.spaces.Box(low=low_bounds, high=high_bounds, dtype=np.float32)
         
         # ESPACIO DE OBSERVACIÓN: Simple para este ejemplo, no usamos un estado complejo.
@@ -127,13 +127,24 @@ class BestRewardsCallback(BaseCallback):
     
     def _save_best_rewards(self):
         if self.best_action is not None:
+            # --- INICIO DE LA CORRECCIÓN ---
+            # self.best_action es la acción cruda (sin acotar).
+            # Debemos acotarla nosotros mismos usando los límites del entorno
+            # para que refleje lo que la simulación realmente usó.
+            
+            raw_action = self.best_action
+            action_space = self.env.action_space
+            clipped_action = np.clip(raw_action, action_space.low, action_space.high)
+            
+            # Ahora usamos la acción acotada para crear el diccionario
             recompensas_actuales = {
-                'win_score': float(self.best_action[0]),
-                'win_dealer_bust': float(self.best_action[1]),
-                'tie': float(self.best_action[2]),
-                'loss_score': float(self.best_action[3]),
-                'player_bust': float(self.best_action[4])
+                'win_score': float(clipped_action[0]),
+                'win_dealer_bust': float(clipped_action[1]),
+                'tie': float(clipped_action[2]),
+                'loss_score': float(clipped_action[3]),
+                'player_bust': float(clipped_action[4])
             }
+            # --- FIN DE LA CORRECCIÓN ---
             
             timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
             

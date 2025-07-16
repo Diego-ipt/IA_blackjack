@@ -366,7 +366,7 @@ class AgenteMarkov_normal(Agente):
         """
         valor_actual = mano_dealer.valor_total
         
-        # OJO: Se usa una clave EXACTA para la recursión interna para garantizar la corrección.
+        # Se usa una clave EXACTA para la recursión interna para garantizar la corrección.
         # El caché aquí es temporal, solo para esta llamada de fuerza bruta.
         key_recursiva = (valor_actual, mano_dealer.es_blanda, tuple(cartas_restantes))
         temp_cache = {}

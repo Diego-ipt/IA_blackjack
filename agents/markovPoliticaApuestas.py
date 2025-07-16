@@ -6,7 +6,7 @@ from core.acciones import Accion
 from core.player import Jugador, Mano
 from core.cartas import Carta, Rango, Palo
 from .agente_base import Agente
-from .policy_gradient_entropy import ApuestaConPolicyGradient
+from policy.policy_gradient_entropy import ApuestaConPolicyGradient
 
 
 class AgenteMarkov_PoliticaApuestas(Agente):

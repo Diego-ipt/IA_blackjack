@@ -2,6 +2,7 @@ import time
 import csv
 import datetime
 import os
+import joblib
 from core.player import Jugador
 from core.casino import Casino
 from agents.markov import AgenteMarkov_arriesgado, AgenteMarkov_normal
@@ -13,8 +14,8 @@ from agents.agente_randomForest import AgenteRandomForest
 from agents.markovPoliticaApuestas import AgenteMarkov_PoliticaApuestas
 
 # ========== CONFIGURACIÓN ==========
-NUM_RONDAS = 50
-DINERO_INICIAL = 900000
+NUM_RONDAS = 5000
+DINERO_INICIAL = 90000000
 
 def inicializar_tracking_agentes(agentes):
     """Inicializa estructuras de tracking para todos los agentes dinámicamente"""

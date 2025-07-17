@@ -96,3 +96,66 @@ class DataCollector:
         Cierra el recolector.
         """
         self._flush_to_disk()
+
+class RoundDataCollector:
+    """
+    Recolecta y almacena datos agregados al final de cada ronda para cada agente.
+    Está optimizado para el análisis de rendimiento a lo largo del tiempo.
+    """
+    def __init__(self, filepath: str, chunk_size: int = 1000):
+        self.filepath = filepath
+        self.chunk_size = chunk_size
+        self.registros = []
+        self._header_written = os.path.exists(self.filepath)
+
+        # Crear directorio si no existe
+        os.makedirs(os.path.dirname(self.filepath), exist_ok=True)
+
+    def registrar_resultado_ronda(self, agente: Agente, ronda_num: int, capital_inicial: int, capital_final: int, apuesta_total: int, cartas_restantes_mazo: int):
+        """
+        Registra el resumen completo de la ronda para un agente.
+        Esta funcion se llama UNA VEZ por agente al final de cada ronda.
+        """
+        ganancia_neta = capital_final - capital_inicial
+
+        if ganancia_neta > 0:
+            resultado = 1
+        elif ganancia_neta < 0:
+            resultado = -1
+        else:
+            resultado = 0
+
+        registro = {
+            "ronda_num": ronda_num,
+            "agente_nombre": agente.jugador.nombre,
+            "capital_inicial_ronda": capital_inicial,
+            "capital_final_ronda": capital_final,
+            "ganancia_neta_ronda": ganancia_neta,
+            "apuesta_total_ronda": apuesta_total,
+            "resultado_ronda": resultado,
+            "cartas_restantes_mazo": cartas_restantes_mazo
+        }
+        self.registros.append(registro)
+
+        # Escribir en disco si alcanzamos el tamaño del chunk
+        if len(self.registros) >= self.chunk_size:
+            self._flush_to_disk()
+
+    def _flush_to_disk(self):
+        """Escribe los registros acumulados en el archivo CSV y limpia la lista."""
+        if not self.registros:
+            return
+
+        df = pd.DataFrame(self.registros)
+        df.to_csv(
+            self.filepath,
+            mode='a',
+            header=not self._header_written,
+            index=False
+        )
+        self._header_written = True
+        self.registros = [] # Limpiar para el siguiente chunk
+
+    def close(self):
+        """Asegura que todos los registros restantes se escriban en el disco."""
+        self._flush_to_disk()

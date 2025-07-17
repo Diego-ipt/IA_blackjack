@@ -2,12 +2,12 @@ import logging
 from .acciones import Accion
 from .player import Jugador, Mano
 from .cartas import Mazo, Carta
-from .data_collector import DataCollector
+from .data_collector import RoundDataCollector
 from agents.agente_base import Agente
 
 
 class Casino:
-    def __init__(self, agentes: list[Agente], num_mazos: int = 4, zapato: float = 0.75, mazo: Mazo = None, data_collector: DataCollector = None):
+    def __init__(self, agentes: list[Agente], num_mazos: int = 4, zapato: float = 0.75, mazo: Mazo = None, data_collector: RoundDataCollector = None):
 
         self.logger = logging.getLogger(self.__class__.__name__)
         self.data_collector = None
@@ -38,8 +38,11 @@ class Casino:
             if hasattr(agente, 'resetear_conteo'):
                 agente.resetear_conteo()
 
-    def _jugar_ronda(self):
-        self.logger.info("------ INICIO DE RONDA ------")
+    def _jugar_ronda(self, ronda_actual: int = 0):
+        self.logger.info(f"------ INICIO DE RONDA {ronda_actual} ------")
+        capitales_iniciales = {agente.jugador.nombre: agente.jugador.capital for agente in self.agentes}
+        cartas_restantes_inicio = self.mazo.limite_barajado
+
         #1. Fase de Preparacion
         self.logger.info("*** Fase de preparación: Barajando y reseteando manos. ***")
 
@@ -118,8 +121,7 @@ class Casino:
                     accion = agente.decidir_accion(mano_actual, carta_visible_dealer)
 
                     # Registramos la accion
-                    if self.data_collector is not None:
-                        self.data_collector.registrar_decision(agente=agente, mano=mano_actual, carta_dealer=carta_visible_dealer, accion=accion)
+
                     self.logger.debug("data_collector ha registrado la decision")
                     self.logger.info(f"   '{agente.jugador.nombre}' decide: {accion.name}.")
                     # El casino valida el movimiento
@@ -193,8 +195,6 @@ class Casino:
                         else:
                             recupera = int(mano_actual.apuesta / 2)
                             ganancia= -recupera
-                            if self.data_collector is not None:
-                                self.data_collector.registrar_resultado(mano=mano_actual, ganancia=ganancia)
                             agente.jugador.rendirse(mano_actual)
                             self.logger.info(f"   '{agente.jugador.nombre}' se rinde con {mano_actual}. Recupera ${recupera}. Mano terminada.")
                             mano_actual.turno_terminado = True
@@ -276,13 +276,31 @@ class Casino:
                     ganancia = -mano.apuesta
                     self.logger.info(f"'{agente.jugador.nombre}' pierde ${mano.apuesta} con {mano}. Capital despues: ${agente.jugador.capital}")
 
-                if self.data_collector is not None:
-                    self.data_collector.registrar_resultado(mano=mano, ganancia=ganancia)
+
         self.logger.info("*** Fin de Fase de Pagos. ***\n")
 
-        self.logger.info("------ FIN DE RONDA ------\n")
-        if self.data_collector is not None:
-            self.data_collector.check_and_flush()
+        # <<< NUEVO: Registrar resultados de la ronda con el nuevo colector >>>
+        if self.data_collector and isinstance(self.data_collector, RoundDataCollector):
+            self.logger.info("*** Registrando resultados de la ronda. ***")
+            for agente in agentes_activos:
+                nombre_agente = agente.jugador.nombre
+                capital_inicial = capitales_iniciales[nombre_agente]
+                capital_final = agente.jugador.capital
+
+                # Calcular la apuesta total de la ronda para este agente
+                apuesta_total = sum(mano.apuesta for mano in agente.jugador.manos)
+
+                self.data_collector.registrar_resultado_ronda(
+                    agente=agente,
+                    ronda_num=ronda_actual,
+                    capital_inicial=capital_inicial,
+                    capital_final=capital_final,
+                    apuesta_total=apuesta_total,
+                    cartas_restantes_mazo=cartas_restantes_inicio
+                )
+            self.logger.info("*** Resultados de la ronda registrados. ***")
+
+        self.logger.info(f"------ FIN DE RONDA {ronda_actual} ------\n")
 
 
     def jugar_partida(self, num_rondas:int):
@@ -291,8 +309,12 @@ class Casino:
         """
         print(f"Iniciando partida de {num_rondas} rondas")
         for i in range(num_rondas):
-            print(f"Ronda {i + 1} / {num_rondas}")
-            self._jugar_ronda()
+            ronda_actual = i + 1
+            print(f"Ronda {ronda_actual} / {num_rondas}")
+            self._jugar_ronda(ronda_actual)
             for agente in self.agentes:
                 print(f"'{agente.jugador.nombre}': Capital = {agente.jugador.capital}")
         print("Partida terminada")
+
+        if self.data_collector:
+            self.data_collector.close()

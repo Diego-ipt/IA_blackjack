@@ -2,8 +2,8 @@ import logging
 
 from core.casino import Casino
 from core.player import Jugador
-from core.data_collector import DataCollector
-from agents.agente_aleatorio import AgenteAleatorio
+from core.data_collector import RoundDataCollector
+from agents.agente_basico import AgenteBasico
 import os
 import datetime
 
@@ -11,13 +11,13 @@ import datetime
 #logging.basicConfig(level=logging.DEBUG)
 
 # Parametros de simulacion
-NUM_RONDAS = 1000
-CAPITAL_INICIAL = 100_000
+NUM_RONDAS = 10000
+CAPITAL_INICIAL = 1000
 
 # Configurar agente y su jugador
-nombre_agente = "AgenteAleatorio1"
+nombre_agente = "AgenteBasico"
 jugador = Jugador(nombre=nombre_agente, capital=CAPITAL_INICIAL)
-agente = AgenteAleatorio(jugador)
+agente = AgenteBasico(jugador)
 
 #  Configurar la ruta del archivo CSV
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -31,18 +31,15 @@ print(f"Los datos se guardaran en: {ruta_archivo}")
 
 # 2. Inicializar el DataCollector con la ruta del archivo
 # Escribira en el disco cada 10,000 registros
-data_collector = DataCollector(filepath=ruta_archivo, chunk_size=10000)
+data_collector = RoundDataCollector(filepath=ruta_archivo)
 
 # 3. Crear el Casino e inyectar el DataCollector
-casino = Casino(agentes=[agente], data_collector=data_collector)
+casino = Casino(agentes=[agente], data_collector=data_collector, num_mazos=6)
 
 # Simulacion de agente
 try:
     # No usamos casino.jugar_partida() para poder mostrar el progreso
-    for i in range(NUM_RONDAS):
-        if (i + 1) % 100 == 0:
-            print(f"Progreso: Ronda {i + 1} / {NUM_RONDAS}")
-        casino._jugar_ronda()
+    casino.jugar_partida(NUM_RONDAS)
 
 finally:
     # Cerrar el DataCollector para guardar el ultimo lote

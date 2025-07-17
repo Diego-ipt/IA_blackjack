@@ -41,7 +41,7 @@ class Casino:
     def _jugar_ronda(self, ronda_actual: int = 0):
         self.logger.info(f"------ INICIO DE RONDA {ronda_actual} ------")
         capitales_iniciales = {agente.jugador.nombre: agente.jugador.capital for agente in self.agentes}
-        cartas_restantes_inicio = self.mazo.limite_barajado
+        cartas_restantes_inicio = len(self.mazo.cartas)
 
         #1. Fase de Preparacion
         self.logger.info("*** Fase de preparación: Barajando y reseteando manos. ***")

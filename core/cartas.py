@@ -107,8 +107,8 @@ class Mazo:
         Asi evitamos que se acaben las cartas.        
         """
         cartas_totales = len(self.cartas)
-        cartas_sin_jugar = int(cartas_totales * (1 - zapato))
-        self.limite_barajado = random.randint(int(cartas_sin_jugar * 0.6), cartas_sin_jugar)
+        self.cartas_sin_jugar = int(cartas_totales * (1 - zapato))
+        self.limite_barajado = random.randint(int(self.cartas_sin_jugar * 0.6), self.cartas_sin_jugar)
 
         # Baraja el mazo al inicializar
         self.barajar()

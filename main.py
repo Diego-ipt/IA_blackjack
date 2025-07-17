@@ -11,8 +11,8 @@ import datetime
 #logging.basicConfig(level=logging.DEBUG)
 
 # Parametros de simulacion
-NUM_RONDAS = 10000
-CAPITAL_INICIAL = 1000
+NUM_RONDAS = 5000
+CAPITAL_INICIAL = 90000000
 
 # Configurar agente y su jugador
 nombre_agente = "AgenteBasico"
@@ -34,7 +34,7 @@ print(f"Los datos se guardaran en: {ruta_archivo}")
 data_collector = RoundDataCollector(filepath=ruta_archivo)
 
 # 3. Crear el Casino e inyectar el DataCollector
-casino = Casino(agentes=[agente], data_collector=data_collector, num_mazos=6)
+casino = Casino(agentes=[agente], data_collector=data_collector, num_mazos=4, zapato=0.75)
 
 # Simulacion de agente
 try:

@@ -141,11 +141,13 @@ class AgenteMarkov_PoliticaApuestas(Agente):
             self.config['rango_apuesta'][1]
         )
 
+        apuesta_min = 1
+        apuesta_max = 10
         # Calcular apuesta con límites inteligentes
         apuesta = np.clip(
-            int(capital * porcentaje_ajustado),
-            self.config['min_apuesta'],
-            int(capital * self.config['max_porcentaje_capital'])
+            int(apuesta_max * porcentaje_ajustado),
+            apuesta_min,
+            apuesta_max
         )
 
         self.logger.debug(

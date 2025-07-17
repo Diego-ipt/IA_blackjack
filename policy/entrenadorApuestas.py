@@ -106,7 +106,7 @@ class EntrenadorApuestas:
         os.makedirs(carpeta_pesos, exist_ok=True)  # Crea la carpeta si no existe
 
         # Nombre del archivo
-        pesos_file = os.path.join(carpeta_pesos,f"pesos_aprendidos_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        pesos_file = os.path.join(carpeta_pesos,f"pesos_aprendidos")
 
         # Guardar pesos usando el método de la política
         self.agente.pg_apuestas.guardar_pesos(pesos_file)

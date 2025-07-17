@@ -46,7 +46,7 @@ class AgenteMarkov_PoliticaApuestas(Agente):
 
         # Cargar pesos entrenados al inicializar el agente
         try:
-            self.pg_apuestas.cargar_pesos("pesos_guardados/pesos_policy_pg.npz")
+            self.pg_apuestas.cargar_pesos("pesos_guardados/pesos_aprendidos.npz")
         except Exception as e:
             logging.warning(f"No se pudieron cargar los pesos al inicializar el agente: {str(e)}")
 

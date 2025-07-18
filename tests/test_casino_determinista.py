@@ -1,10 +1,10 @@
 import pytest
 import logging
-from core.casino import Casino
-from core.player import Jugador, Mano
-from core.cartas import Carta, Palo, Rango, MazoDeterminista
-from core.acciones import Accion
-from agents.agente_determinista import AgenteDeterminista
+from ..core.casino import Casino
+from ..core.player import Jugador, Mano
+from ..core.cartas import Carta, Palo, Rango, MazoDeterminista
+from ..core.acciones import Accion
+from .agents.agente_determinista import AgenteDeterminista
 
 # Tests para la clase Casino
 # Hechos por copilot (Claude Sonnet 4)
